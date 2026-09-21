@@ -15,7 +15,7 @@
 <body>
 
     <div class="main-container">
-        <!-- Header Logo & Identity -->
+        <!-- Header Logo & Identity (Rata Tengah) -->
         <header class="header">
             <img src="logo.png" alt="KAWANUA Inline Skate School" class="logo-img">
             <h1 class="brand-title">KAWANUA INLINE SKATE</h1>
@@ -24,6 +24,7 @@
 
         <!-- Main Call to Action (CTA) -->
         <main class="cta-container">
+            <!-- Tombol 1: Form Pendaftaran -->
             <a href="register/index.html" class="btn-primary">
                 <span class="btn-icon">📝</span>
                 <div class="btn-text">
@@ -32,7 +33,7 @@
                 </div>
             </a>
 
-            <!-- Toggle Price List Button -->
+            <!-- Tombol 2: Toggle Price List -->
             <button type="button" class="btn-secondary" id="togglePriceBtn">
                 <span class="btn-icon">💰</span>
                 <div class="btn-text">
@@ -40,6 +41,15 @@
                     <small>Cek daftar harga latihan</small>
                 </div>
                 <span class="chevron-icon">▼</span>
+            </button>
+
+            <!-- Tombol 3: Modal Social Media & Komunitas -->
+            <button type="button" class="btn-secondary" id="openSocialModalBtn">
+                <span class="btn-icon">🌐</span>
+                <div class="btn-text">
+                    <strong>Media Sosial & Komunitas</strong>
+                    <small>Instagram & Reclub Official</small>
+                </div>
             </button>
         </main>
 
@@ -87,7 +97,6 @@
                 <ul class="tc-list">
                     <li>Durasi sesi di luar warming up.</li>
                     <li>Skates equipment tidak disediakan (sewa/rekomendasi tersedia).</li>
-                    <li>Lokasi utama di God Bless Park, Manado.</li>
                 </ul>
             </div>
         </section>
@@ -96,9 +105,15 @@
         <section class="info-section">
             <div class="info-card">
                 <h3>📍 Lokasi Latihan</h3>
-                <p>God Bless Park, Kota Manado, Sulawesi Utara</p>
+                <ul class="location-list">
+                    <li>Godbless Park</li>
+                    <li>Marina Plaza</li>
+                    <li>Lion Plaza</li>
+                    <li>Lintasan Karpet Biru</li>
+                    <li>Bukit Golf Boulevard</li>
+                </ul>
             </div>
-            <div class="info-card">
+            <div class="info-card center-text">
                 <h3>🛼 Program Latihan</h3>
                 <p>Anak-anak & Dewasa | Pemula hingga Lanjutan</p>
             </div>
@@ -108,6 +123,35 @@
         <footer class="footer">
             <p>&copy; 2026 KAWANUA Inline Skate School</p>
         </footer>
+    </div>
+
+    <!-- POP-UP MODAL SOCIAL MEDIA -->
+    <div class="modal-overlay hidden" id="socialModal">
+        <div class="modal-card">
+            <button type="button" class="close-modal-btn" id="closeSocialModalBtn">&times;</button>
+            <h3 class="modal-title">Komunitas & Media Sosial</h3>
+            <p class="modal-subtitle">Kunjungi dan ikuti keseruan latihan kami di:</p>
+            
+            <div class="modal-links">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/kawanua_sekolah_sepaturoda/" target="_blank" rel="noopener noreferrer" class="social-link-btn instagram">
+                    <span class="social-icon">📸</span>
+                    <div class="social-text">
+                        <strong>Instagram Resmi</strong>
+                        <small>@kawanua_sekolah_sepaturoda</small>
+                    </div>
+                </a>
+
+                <!-- Reclub -->
+                <a href="https://reclub.co/clubs/@kawanuainlineskate" target="_blank" rel="noopener noreferrer" class="social-link-btn reclub">
+                    <span class="social-icon">🏆</span>
+                    <div class="social-text">
+                        <strong>Reclub Community</strong>
+                        <small>@kawanuainlineskate</small>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
