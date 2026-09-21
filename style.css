@@ -24,9 +24,9 @@ body {
     text-align: center;
 }
 
-/* Header & Logo */
+/* Header & Logo Besar Responsif */
 .header {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -35,10 +35,11 @@ body {
 }
 
 .logo-img {
-    width: 200px; /* Ukuran diperbesar */
-    max-width: 85%;
-    height: auto;
-    margin-bottom: 14px;
+    width: 100%;           /* Mengisi penuh lebar container */
+    max-width: 380px;      /* Batas maksimal ukuran besar di Laptop/PC */
+    height: auto;          /* Mencegah logo terdistorsi/gepeng */
+    object-fit: contain;
+    margin-bottom: 12px;
 }
 
 .brand-title {
