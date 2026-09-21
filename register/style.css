@@ -1,0 +1,200 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    color: #1c2541;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px 16px;
+}
+
+.survey-card-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 580px;
+    padding: 20px 10px;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.brand-logo {
+    max-width: 140px;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+.form-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #1c2541;
+    letter-spacing: 0.5px;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.section-label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1c2541;
+    margin-bottom: 12px;
+}
+
+.required {
+    color: #e63946;
+}
+
+/* Survey Buttons Grid System */
+.option-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.col-1 { grid-template-columns: 1fr; }
+.col-2 { grid-template-columns: repeat(2, 1fr); }
+
+.survey-btn {
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 14px 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    color: #333;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+    width: 100%;
+}
+
+.survey-btn:hover {
+    border-color: #ff5722;
+    background-color: #fff8f6;
+}
+
+.survey-btn.active {
+    background-color: #ff5722;
+    border-color: #ff5722;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(255, 87, 34, 0.25);
+}
+
+/* Input Fields Style */
+.input-group {
+    margin-bottom: 14px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ff5722;
+    background-color: #ffffff;
+}
+
+/* Error Validation Styling */
+.invalid-input input {
+    border-color: #e63946 !important;
+    background-color: #fff5f5 !important;
+}
+
+.invalid-section .survey-btn {
+    border-color: #e63946;
+}
+
+.error-msg {
+    display: none;
+    color: #e63946;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+.invalid-section .error-msg,
+.invalid-input .error-msg {
+    display: block;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    background-color: #25D366;
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+    background-color: #1ebd59;
+    transform: translateY(-2px);
+}
+
+.wa-icon {
+    width: 22px;
+    height: 22px;
+}
+
+/* Responsive Handling */
+@media (max-width: 480px) {
+    .col-2 {
+        grid-template-columns: 1fr;
+    }
+}

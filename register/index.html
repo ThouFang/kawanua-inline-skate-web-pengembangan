@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Les Private - KAWANUA Inline Skate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Menggunakan ./style.css untuk memastikan membaca folder register -->
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="./icon.png">
+</head>
+<body>
+
+    <div class="survey-card-container">
+        <!-- Header Brand -->
+        <div class="form-header">
+            <a href="../index.html">
+                <img src="../logo.png" alt="KAWANUA Inline Skate Logo" class="brand-logo">
+            </a>
+            <h2>FORM PENDAFTARAN LES PRIVATE</h2>
+            <p class="subtitle">Lengkapi survei pendataan murid baru di bawah ini</p>
+        </div>
+
+        <form id="surveyRegisterForm" novalidate>
+            
+            <!-- SECTION 1: KATEGORI USIA -->
+            <div class="form-section" id="sec-ageGroup">
+                <label class="section-label">1. Kategori Usia Peserta <span class="required">*</span></label>
+                <div class="option-grid col-2">
+                    <button type="button" class="survey-btn" data-field="ageGroup" data-value="Anak-anak">Anak-anak</button>
+                    <button type="button" class="survey-btn" data-field="ageGroup" data-value="Dewasa">Dewasa</button>
+                </div>
+                <input type="hidden" id="ageGroup" name="ageGroup" required>
+                <span class="error-msg">Pilih kategori usia peserta terlebih dahulu!</span>
+            </div>
+
+            <!-- SECTION 2: DATA DIRI SISWA -->
+            <div class="form-section" id="sec-studentData">
+                <label class="section-label">2. Data Diri Murid <span class="required">*</span></label>
+                
+                <div class="input-group" id="group-studentName">
+                    <label for="studentName">Nama Lengkap Murid <span class="required">*</span></label>
+                    <input type="text" id="studentName" placeholder="Contoh: Rachel Manoppo">
+                    <span class="error-msg">Nama murid wajib diisi!</span>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group col" id="group-studentAge">
+                        <label for="studentAge">Usia Exact (Tahun) <span class="required">*</span></label>
+                        <input type="number" id="studentAge" min="3" max="80" placeholder="Contoh: 10">
+                        <span class="error-msg">Usia wajib diisi!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: DATA WALI (KHUSUS ANAK-ANAK) -->
+            <div class="form-section hidden" id="sec-guardianData">
+                <label class="section-label">3. Data Orang Tua / Wali <span class="required">*</span></label>
+                
+                <div class="input-group" id="group-guardianName">
+                    <label for="guardianName">Nama Orang Tua / Wali <span class="required">*</span></label>
+                    <input type="text" id="guardianName" placeholder="Contoh: Ibu Maria">
+                    <span class="error-msg">Nama orang tua/wali wajib diisi!</span>
+                </div>
+
+                <div class="input-group" id="group-guardianWa">
+                    <label for="guardianWa">Nomor WhatsApp Wali <span class="required">*</span></label>
+                    <input type="tel" id="guardianWa" placeholder="Contoh: 081234567890">
+                    <span class="error-msg">Nomor WhatsApp wali wajib diisi!</span>
+                </div>
+            </div>
+
+            <!-- SECTION FOR ADULT PHONE (KHUSUS DEWASA) -->
+            <div class="form-section hidden" id="sec-adultPhone">
+                <div class="input-group" id="group-adultWa">
+                    <label for="adultWa">Nomor WhatsApp Aktif <span class="required">*</span></label>
+                    <input type="tel" id="adultWa" placeholder="Contoh: 081234567890">
+                    <span class="error-msg">Nomor WhatsApp wajib diisi!</span>
+                </div>
+            </div>
+
+            <!-- SECTION 4: TINGKAT KEMAMPUAN -->
+            <div class="form-section" id="sec-skillLevel">
+                <label class="section-label">4. Pengalaman / Tingkat Kemampuan <span class="required">*</span></label>
+                <div class="option-grid col-1">
+                    <button type="button" class="survey-btn" data-field="skillLevel" data-value="Pemula Total (Belum Bisa Berdiri)">Pemula Total (Belum Bisa Berdiri)</button>
+                    <button type="button" class="survey-btn" data-field="skillLevel" data-value="Bisa Meluncur Pelan">Bisa Meluncur Pelan</button>
+                    <button type="button" class="survey-btn" data-field="skillLevel" data-value="Otodidak (Ingin Perbaiki Teknik)">Otodidak (Ingin Perbaiki Teknik)</button>
+                    <button type="button" class="survey-btn" data-field="skillLevel" data-value="Lanjutan / Intermediate">Lanjutan / Intermediate</button>
+                </div>
+                <input type="hidden" id="skillLevel" name="skillLevel" required>
+                <span class="error-msg">Pilih tingkat kemampuan peserta!</span>
+            </div>
+
+            <!-- SECTION 5: KEPEMILIKAN ALAT -->
+            <div class="form-section" id="sec-equipment">
+                <label class="section-label">5. Kepemilikan Peralatan <span class="required">*</span></label>
+                <div class="option-grid col-1">
+                    <button type="button" class="survey-btn" data-field="equipment" data-value="Sudah Ada Sepatu & Proteksi Sendiri">Sudah Ada Sepatu & Proteksi Sendiri</button>
+                    <button type="button" class="survey-btn" data-field="equipment" data-value="Belum Punya (Sewa / Rekomendasi)">Belum Punya (Sewa / Rekomendasi)</button>
+                </div>
+                <input type="hidden" id="equipment" name="equipment" required>
+                <span class="error-msg">Pilih status peralatan!</span>
+            </div>
+
+            <!-- SECTION 6: PAKET LATIHAN -->
+            <div class="form-section" id="sec-package">
+                <label class="section-label">6. Pilihan Paket Latihan <span class="required">*</span></label>
+                <div class="option-grid col-2">
+                    <button type="button" class="survey-btn" data-field="package" data-value="Weekdays - 1 Hour (175k)">Weekdays<br><strong>1 Hour (175k)</strong></button>
+                    <button type="button" class="survey-btn" data-field="package" data-value="Weekdays - 1 Month Pass (600k)">Weekdays<br><strong>1 Month Pass (600k)</strong></button>
+                    <button type="button" class="survey-btn" data-field="package" data-value="Weekend - 1 Hour (200k)">Weekend<br><strong>1 Hour (200k)</strong></button>
+                    <button type="button" class="survey-btn" data-field="package" data-value="Weekend - 1 Month Pass (700k)">Weekend<br><strong>1 Month Pass (700k)</strong></button>
+                </div>
+                <input type="hidden" id="package" name="package" required>
+                <span class="error-msg">Pilih paket latihan yang diinginkan!</span>
+            </div>
+
+            <!-- SECTION 7: PILIHAN COACH -->
+            <div class="form-section" id="sec-coach">
+                <label class="section-label">7. Pilihan Coach / Pelatih <span class="required">*</span></label>
+                <div class="option-grid col-1">
+                    <button type="button" class="survey-btn" data-field="coach" data-value="Bebas (Admin)">Bebas (Rekomendasi Admin)</button>
+                    <button type="button" class="survey-btn" data-field="coach" data-value="Coach Ardiles">Coach Ardiles</button>
+                    <button type="button" class="survey-btn" data-field="coach" data-value="Coach Topan">Coach Topan</button>
+                </div>
+                <input type="hidden" id="coach" name="coach" required>
+                <span class="error-msg">Pilih coach yang Anda harapkan!</span>
+            </div>
+
+            <!-- SECTION 8: JADWAL & LOKASI -->
+            <div class="form-section" id="sec-schedule">
+                <label class="section-label">8. Rencana Schedule Latihan <span class="required">*</span></label>
+                <div class="input-group" id="group-scheduleText">
+                    <input type="text" id="scheduleText" placeholder="Contoh: Sabtu sore jam 16.30 WITA">
+                    <span class="error-msg">Rencana hari & jam latihan wajib diisi!</span>
+                </div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" class="submit-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" class="wa-icon">
+                Kirim Pendataan ke WhatsApp Admin
+            </button>
+        </form>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
