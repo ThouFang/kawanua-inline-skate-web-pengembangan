@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const socialModal = document.getElementById("socialModal");
 
     if (openSocialModalBtn && closeSocialModalBtn && socialModal) {
-        // Buka Modal
-        openSocialModalBtn.addEventListener("click", function () {
+        // Buka Modal saat tombol diklik
+        openSocialModalBtn.addEventListener("click", function (e) {
+            e.preventDefault();
             socialModal.classList.remove("hidden");
         });
 
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             socialModal.classList.add("hidden");
         });
 
-        // Tutup Modal jika klik di luar area kartu (overlay)
+        // Tutup Modal jika area luar modal diklik
         socialModal.addEventListener("click", function (e) {
             if (e.target === socialModal) {
                 socialModal.classList.add("hidden");
