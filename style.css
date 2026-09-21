@@ -20,22 +20,23 @@ body {
     max-width: 480px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Memastikan rata tengah seluruh elemen */
+    align-items: center;
     text-align: center;
 }
 
-/* Header & Logo Besar */
+/* Header & Logo */
 .header {
     margin-bottom: 28px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .logo-img {
-    width: 180px; /* Ukuran logo diperbesar */
-    max-width: 80%;
+    width: 200px; /* Ukuran diperbesar */
+    max-width: 85%;
     height: auto;
     margin-bottom: 14px;
 }
@@ -53,7 +54,7 @@ body {
     margin-top: 4px;
 }
 
-/* CTA Buttons */
+/* CTA Buttons - Rata Tengah Total */
 .cta-container {
     display: flex;
     flex-direction: column;
@@ -65,14 +66,15 @@ body {
 .btn-primary, .btn-secondary {
     display: flex;
     align-items: center;
+    justify-content: center; /* Rata tengah konten dalam tombol */
     padding: 16px 20px;
-    border-radius: 14px;
+    border-radius: 16px;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
     border: none;
     cursor: pointer;
     width: 100%;
-    text-align: left;
+    position: relative;
 }
 
 .btn-primary {
@@ -99,11 +101,11 @@ body {
 
 .btn-icon {
     font-size: 1.5rem;
-    margin-right: 14px;
+    margin-right: 10px;
 }
 
 .btn-text {
-    flex-grow: 1;
+    text-align: center; /* Teks dalam tombol rata tengah */
 }
 
 .btn-text strong {
@@ -119,6 +121,8 @@ body {
 
 .chevron-icon {
     font-size: 0.8rem;
+    position: absolute;
+    right: 20px;
     transition: transform 0.3s ease;
 }
 
@@ -144,6 +148,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.1rem;
     margin-bottom: 16px;
+    text-align: center;
 }
 
 .price-grid {
@@ -157,6 +162,7 @@ body {
     padding: 16px;
     border-radius: 12px;
     border: 1px solid #e9ecef;
+    text-align: center;
 }
 
 .card-label {
@@ -191,7 +197,7 @@ body {
 
 .tc-section {
     margin-top: 16px;
-    text-align: left;
+    text-align: center;
 }
 
 .tc-title {
@@ -203,10 +209,11 @@ body {
 .tc-list {
     font-size: 0.78rem;
     color: #555;
-    padding-left: 18px;
+    list-style: none; /* Menghilangkan bullet point */
+    padding: 0;
 }
 
-/* Info Cards & Locations */
+/* Info Section & Lokasi Rata Tengah */
 .info-section {
     display: flex;
     flex-direction: column;
@@ -217,20 +224,16 @@ body {
 
 .info-card {
     background-color: #f8f9fa;
-    padding: 14px 18px;
-    border-radius: 12px;
-    text-align: left;
+    padding: 16px 18px;
+    border-radius: 16px;
+    text-align: center; /* Rata tengah */
     border: 1px solid #e9ecef;
 }
 
-.info-card.center-text {
-    text-align: center;
-}
-
 .info-card h3 {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     color: #1c2541;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .info-card p {
@@ -241,12 +244,13 @@ body {
 .location-list {
     font-size: 0.8rem;
     color: #444;
-    padding-left: 18px;
-    margin-top: 4px;
+    list-style: none; /* Hilangkan titik bullet */
+    padding: 0;
+    margin: 0;
 }
 
 .location-list li {
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 /* Modal Pop-up */
@@ -260,7 +264,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999;
     padding: 16px;
 }
 
@@ -272,12 +276,7 @@ body {
     max-width: 380px;
     position: relative;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: popIn 0.25s ease-out;
-}
-
-@keyframes popIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
+    text-align: center;
 }
 
 .close-modal-btn {
@@ -313,6 +312,7 @@ body {
 .social-link-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 12px 14px;
     border-radius: 12px;
     text-decoration: none;
@@ -320,7 +320,6 @@ body {
     background-color: #f8f9fa;
     border: 1px solid #e9ecef;
     transition: all 0.2s ease;
-    text-align: left;
 }
 
 .social-link-btn:hover {
@@ -330,7 +329,7 @@ body {
 
 .social-icon {
     font-size: 1.4rem;
-    margin-right: 12px;
+    margin-right: 10px;
 }
 
 .social-text strong {
@@ -347,4 +346,5 @@ body {
 .footer {
     font-size: 0.75rem;
     color: #aaa;
+    text-align: center;
 }
