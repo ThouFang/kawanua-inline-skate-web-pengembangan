@@ -24,12 +24,12 @@ body {
     /* Gambar background disetting ikut bergulir (scroll) */
     background-image: url('assets/Background.png');
     background-repeat: no-repeat;
-    background-position: top center; /* Dimulai dari bagian atas gambar */
+    background-position: top center;
     background-size: cover;
-    background-attachment: scroll; /* <-- Kunci agar gambar ikut bergerak saat di-scroll */
+    background-attachment: scroll;
 }
 
-/* Gradient Overlay & Blur halus agar stiker background tidak membuat teks silau */
+/* Gradient Overlay Transparan Bening */
 .bg-gradient-overlay {
     position: fixed;
     top: 0;
@@ -38,11 +38,11 @@ body {
     height: 100vh;
     background: linear-gradient(
         to top, 
-        rgba(15, 23, 42, 0.65) 0%,   /* Agak gelap di bawah */
-        rgba(255, 255, 255, 0.25) 50%, /* Bening transparan di tengah */
-        rgba(15, 23, 42, 0.4) 100%   /* Bening tipis di atas */
+        rgba(15, 23, 42, 0.55) 0%,   
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(15, 23, 42, 0.3) 100%   
     );
-    backdrop-filter: blur(2px); /* Blur halus untuk memperjelas tombol 3D di depan */
+    backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     pointer-events: none;
     z-index: 1;
@@ -93,7 +93,7 @@ body {
     margin-top: 2px;
 }
 
-/* CTA Buttons 3D dengan Transparansi Glass */
+/* CTA Buttons 3D dengan Transparansi 75% */
 .cta-container {
     display: flex;
     flex-direction: column;
@@ -136,7 +136,7 @@ body {
     box-shadow: 0 3px 0px #d84315, 0 4px 8px rgba(216, 67, 21, 0.2);
 }
 
-/* Tombol Sekunder 3D (Putih Transparan Glass) */
+/* Tombol Sekunder 3D (Putih Transparan 75%) */
 .btn-secondary {
     background: rgba(255, 255, 255, 0.75) !important;
     color: #1c2541;
@@ -145,7 +145,7 @@ body {
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.88) !important;
     transform: translateY(-2px);
     box-shadow: 0 8px 0px #cbd5e1, 0 14px 22px rgba(0, 0, 0, 0.12);
 }
@@ -186,19 +186,19 @@ body {
     transform: rotate(180deg);
 }
 
-/* Price Section & Cards (Glassmorphism Super Transparan) */
+/* Price Section & Cards (Glassmorphism 75% Transparan) */
 .hidden {
     display: none !important;
 }
 
 .price-cards-container {
-    background: rgba(255, 255, 255, 0.35) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(14px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
     padding: 20px;
     border-radius: 20px;
     margin-bottom: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
     width: 100%;
 }
@@ -217,12 +217,12 @@ body {
 }
 
 .price-card {
-    background: rgba(255, 255, 255, 0.3) !important;
+    background: rgba(255, 255, 255, 0.65) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     padding: 16px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
@@ -253,7 +253,7 @@ body {
 
 .separator {
     height: 1px;
-    background-color: rgba(255, 255, 255, 0.4) !important;
+    background-color: rgba(226, 232, 240, 0.8) !important;
     margin: 10px 0;
 }
 
@@ -275,7 +275,7 @@ body {
     padding: 0;
 }
 
-/* Info Cards & Lokasi Super Transparan Blur */
+/* Info Cards & Lokasi 75% Transparan Blur */
 .info-section {
     display: flex;
     flex-direction: column;
@@ -285,13 +285,13 @@ body {
 }
 
 .info-card {
-    background: rgba(255, 255, 255, 0.35) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(14px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
     padding: 18px 20px;
     border-radius: 20px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
 }
 
@@ -319,7 +319,7 @@ body {
     font-weight: 500;
 }
 
-/* Modal Pop-up Transparan */
+/* Modal Pop-up Transparan 75% */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -387,7 +387,7 @@ body {
     border-radius: 14px;
     text-decoration: none;
     color: #1c2541;
-    background-color: rgba(248, 250, 252, 0.6) !important;
+    background-color: rgba(248, 250, 252, 0.75) !important;
     border: 1px solid rgba(226, 232, 240, 0.8);
     box-shadow: 0 4px 0px #cbd5e1;
     transition: all 0.2s ease;
