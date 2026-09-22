@@ -4,22 +4,46 @@
     padding: 0;
 }
 
+/* 1. Pengaturan Body & Background */
+html, body {
+    width: 100%;
+    min-height: 100vh;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     color: #1c2541;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     padding: 24px 16px;
     position: relative;
+    background-color: #0f172a; /* Warna cadangan jika gambar sedang memuat */
     
-    /* Perbaikan nama file menggunakan 'B' kapital (Background.png) */
-    background-image: url('assets/Background.png');
+    /* Memanggil gambar Background.png dengan beberapa format fallback jalur */
+    background-image: url('assets/Background.png'), url('./assets/Background.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
+}
+
+/* 2. Gradient Overlay Transparan dari Bawah ke Atas */
+.bg-gradient-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Gradient transparan halus */
+    background: linear-gradient(
+        to top, 
+        rgba(15, 23, 42, 0.75) 0%,   /* Agak gelap di bagian bawah */
+        rgba(15, 23, 42, 0.2) 50%,   /* Transparan bening di tengah */
+        rgba(255, 255, 255, 0.3) 100% /* Terang tipis di paling atas */
+    );
+    pointer-events: none;
+    z-index: 1;
 }
 
 .main-container {
@@ -31,9 +55,10 @@ body {
     text-align: center;
     position: relative;
     z-index: 2;
+    background: transparent !important; /* Memastikan tidak menutupi background */
 }
 
-/* Header & Logo Besar */
+/* Header & Logo Besar Responsif */
 .header {
     margin-bottom: 24px;
     width: 100%;
@@ -49,25 +74,26 @@ body {
     height: auto;
     object-fit: contain;
     margin-bottom: 8px;
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
 }
 
 .brand-title {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.4rem;
     font-weight: 800;
-    color: #1c2541;
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+    color: #ffffff; /* Mengubah warna ke putih agar kontras dengan background */
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .brand-tagline {
     font-size: 0.85rem;
-    color: #334155;
-    font-weight: 600;
+    color: #f1f5f9;
+    font-weight: 500;
     margin-top: 2px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-/* CTA Buttons dengan Efek 3D Shadow & Transparansi Glass */
+/* CTA Buttons 3D dengan Transparansi Glass */
 .cta-container {
     display: flex;
     flex-direction: column;
@@ -96,39 +122,37 @@ body {
     background: rgba(255, 87, 34, 0.92);
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.4);
-    /* Shadow 3D Bertingkat */
-    box-shadow: 0 8px 0px #d84315, 0 12px 20px rgba(216, 67, 21, 0.4);
+    box-shadow: 0 8px 0px #d84315, 0 12px 20px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary:hover {
     background: rgba(255, 87, 34, 1);
     transform: translateY(-2px);
-    box-shadow: 0 10px 0px #d84315, 0 16px 24px rgba(216, 67, 21, 0.5);
+    box-shadow: 0 10px 0px #d84315, 0 16px 24px rgba(0, 0, 0, 0.4);
 }
 
 .btn-primary:active {
     transform: translateY(4px);
-    box-shadow: 0 4px 0px #d84315, 0 6px 10px rgba(216, 67, 21, 0.3);
+    box-shadow: 0 4px 0px #d84315, 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Tombol Sekunder 3D (Putih Transparan) */
+/* Tombol Sekunder 3D (Putih Transparan Glass) */
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.88);
     color: #1c2541;
     border: 1px solid rgba(255, 255, 255, 0.9);
-    /* Shadow 3D Bertingkat */
-    box-shadow: 0 6px 0px #cbd5e1, 0 10px 18px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 0px #cbd5e1, 0 10px 18px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     transform: translateY(-2px);
-    box-shadow: 0 8px 0px #cbd5e1, 0 14px 22px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 0px #cbd5e1, 0 14px 22px rgba(0, 0, 0, 0.25);
 }
 
 .btn-secondary:active {
     transform: translateY(3px);
-    box-shadow: 0 3px 0px #cbd5e1, 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 0px #cbd5e1, 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-icon {
@@ -168,14 +192,14 @@ body {
 }
 
 .price-cards-container {
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 20px;
     border-radius: 20px;
     margin-bottom: 24px;
     border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     width: 100%;
 }
 
@@ -193,7 +217,7 @@ body {
 }
 
 .price-card {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 16px;
     border-radius: 14px;
     border: 1px solid #e2e8f0;
@@ -259,14 +283,14 @@ body {
 }
 
 .info-card {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 18px 20px;
     border-radius: 20px;
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 6px 0px #cbd5e1, 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 0px #cbd5e1, 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .info-card h3 {
@@ -300,7 +324,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(15, 23, 42, 0.65);
+    background-color: rgba(15, 23, 42, 0.7);
     backdrop-filter: blur(6px);
     display: flex;
     justify-content: center;
@@ -310,13 +334,13 @@ body {
 }
 
 .modal-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     padding: 24px 20px;
     border-radius: 22px;
     width: 100%;
     max-width: 380px;
     position: relative;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.8);
 }
@@ -395,6 +419,6 @@ body {
 .footer {
     font-size: 0.75rem;
     color: #ffffff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     text-align: center;
 }
