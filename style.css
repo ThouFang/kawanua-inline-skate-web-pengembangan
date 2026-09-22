@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-/* 1. Pengaturan Body & Latar Belakang Terang */
+/* 1. Pengaturan Body & Background Scroll */
 html, body {
     width: 100%;
     min-height: 100vh;
@@ -21,7 +21,6 @@ body {
     position: relative;
     background-color: #0f172a;
     
-    /* Gambar background disetting ikut bergulir (scroll) */
     background-image: url('assets/Background.png');
     background-repeat: no-repeat;
     background-position: top center;
@@ -29,7 +28,7 @@ body {
     background-attachment: scroll;
 }
 
-/* Gradient Overlay Transparan Bening */
+/* Overlay Bening Tipis */
 .bg-gradient-overlay {
     position: fixed;
     top: 0;
@@ -38,12 +37,10 @@ body {
     height: 100vh;
     background: linear-gradient(
         to top, 
-        rgba(15, 23, 42, 0.55) 0%,   
-        rgba(255, 255, 255, 0.2) 50%, 
-        rgba(15, 23, 42, 0.3) 100%   
+        rgba(15, 23, 42, 0.4) 0%,   
+        rgba(255, 255, 255, 0.1) 50%, 
+        rgba(15, 23, 42, 0.2) 100%   
     );
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
     pointer-events: none;
     z-index: 1;
 }
@@ -60,7 +57,7 @@ body {
     background: transparent !important;
 }
 
-/* Header & Logo Besar Responsif */
+/* Header Logo */
 .header {
     margin-bottom: 24px;
     width: 100%;
@@ -76,24 +73,26 @@ body {
     height: auto;
     object-fit: contain;
     margin-bottom: 8px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
 }
 
 .brand-title {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.4rem;
     font-weight: 800;
-    color: #1c2541;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .brand-tagline {
     font-size: 0.85rem;
-    color: #475569;
-    font-weight: 500;
+    color: #f1f5f9;
+    font-weight: 600;
     margin-top: 2px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* CTA Buttons 3D dengan Transparansi 75% */
+/* CTA Buttons 3D */
 .cta-container {
     display: flex;
     flex-direction: column;
@@ -113,46 +112,45 @@ body {
     cursor: pointer;
     width: 100%;
     position: relative;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 /* Tombol Utama 3D (Orange) */
 .btn-primary {
-    background: rgba(255, 87, 34, 0.95);
+    background: rgba(255, 87, 34, 0.92);
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 6px 0px #d84315, 0 10px 18px rgba(216, 67, 21, 0.3);
+    box-shadow: 0 6px 0px #d84315, 0 10px 18px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary:hover {
     background: rgba(255, 87, 34, 1);
     transform: translateY(-2px);
-    box-shadow: 0 8px 0px #d84315, 0 14px 22px rgba(216, 67, 21, 0.4);
+    box-shadow: 0 8px 0px #d84315, 0 14px 22px rgba(0, 0, 0, 0.4);
 }
 
 .btn-primary:active {
     transform: translateY(3px);
-    box-shadow: 0 3px 0px #d84315, 0 4px 8px rgba(216, 67, 21, 0.2);
+    box-shadow: 0 3px 0px #d84315, 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Tombol Sekunder 3D (Putih Transparan 75%) */
+/* Tombol Sekunder 3D (Kaca Bening) */
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.75) !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
     color: #1c2541;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 6px 0px #cbd5e1, 0 10px 18px rgba(0, 0, 0, 0.08);
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 0 6px 0px rgba(255, 255, 255, 0.4), 0 10px 18px rgba(0, 0, 0, 0.2) !important;
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.88) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 0px #cbd5e1, 0 14px 22px rgba(0, 0, 0, 0.12);
 }
 
 .btn-secondary:active {
     transform: translateY(3px);
-    box-shadow: 0 3px 0px #cbd5e1, 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 .btn-icon {
@@ -172,7 +170,8 @@ body {
 
 .btn-text small {
     font-size: 0.75rem;
-    color: #64748b;
+    color: #334155;
+    font-weight: 500;
 }
 
 .chevron-icon {
@@ -186,20 +185,20 @@ body {
     transform: rotate(180deg);
 }
 
-/* Price Section & Cards (Glassmorphism 75% Transparan) */
+/* Price Section & Cards (Glassmorphism Kaca Bening Transparan) */
 .hidden {
     display: none !important;
 }
 
 .price-cards-container {
-    background: rgba(255, 255, 255, 0.75) !important;
-    backdrop-filter: blur(14px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
     padding: 20px;
     border-radius: 20px;
     margin-bottom: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.6) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
     width: 100%;
 }
 
@@ -208,6 +207,7 @@ body {
     font-size: 1.1rem;
     margin-bottom: 16px;
     text-align: center;
+    color: #1c2541;
 }
 
 .price-grid {
@@ -217,13 +217,13 @@ body {
 }
 
 .price-card {
-    background: rgba(255, 255, 255, 0.65) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
     padding: 16px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.6) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -231,29 +231,30 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
     font-size: 0.85rem;
-    color: #ff5722;
+    color: #d84315;
     margin-bottom: 10px;
 }
 
 .session-title {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.9rem;
 }
 
 .session-price {
-    font-weight: 700;
+    font-weight: 800;
     color: #1c2541;
     font-size: 1rem;
 }
 
 .session-detail {
     font-size: 0.75rem;
-    color: #64748b;
+    color: #334155;
+    font-weight: 500;
 }
 
 .separator {
     height: 1px;
-    background-color: rgba(226, 232, 240, 0.8) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
     margin: 10px 0;
 }
 
@@ -270,12 +271,13 @@ body {
 
 .tc-list {
     font-size: 0.78rem;
-    color: #475569;
+    color: #1e293b;
+    font-weight: 500;
     list-style: none;
     padding: 0;
 }
 
-/* Info Cards & Lokasi 75% Transparan Blur */
+/* Info Cards & Lokasi Kaca Bening Transparan */
 .info-section {
     display: flex;
     flex-direction: column;
@@ -285,30 +287,32 @@ body {
 }
 
 .info-card {
-    background: rgba(255, 255, 255, 0.75) !important;
-    backdrop-filter: blur(14px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
+    background: rgba(255, 255, 255, 0.3) !important; /* Dibuat 30% saja agar stiker belakang menembus */
+    backdrop-filter: blur(4px) !important;             /* Blur diturunkan agar stiker belakang terlihat jelas */
+    -webkit-backdrop-filter: blur(4px) !important;
     padding: 18px 20px;
     border-radius: 20px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.6) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
 }
 
 .info-card h3 {
-    font-size: 0.9rem;
-    color: #1c2541;
+    font-size: 1rem;
+    color: #0f172a;
+    font-weight: 800;
     margin-bottom: 8px;
 }
 
 .info-card p {
-    font-size: 0.8rem;
-    color: #475569;
+    font-size: 0.82rem;
+    color: #0f172a;
+    font-weight: 600;
 }
 
 .location-list {
-    font-size: 0.8rem;
-    color: #334155;
+    font-size: 0.85rem;
+    color: #0f172a;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -316,10 +320,11 @@ body {
 
 .location-list li {
     margin-bottom: 4px;
-    font-weight: 500;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* Modal Pop-up Transparan 75% */
+/* Modal Pop-up Bening Transparan */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -336,17 +341,17 @@ body {
 }
 
 .modal-card {
-    background: rgba(255, 255, 255, 0.75) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
     padding: 24px 20px;
     border-radius: 22px;
     width: 100%;
     max-width: 380px;
     position: relative;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
 }
 
 .close-modal-btn {
@@ -356,7 +361,7 @@ body {
     background: none;
     border: none;
     font-size: 1.6rem;
-    color: #64748b;
+    color: #1e293b;
     cursor: pointer;
 }
 
@@ -368,9 +373,10 @@ body {
 
 .modal-subtitle {
     font-size: 0.78rem;
-    color: #64748b;
+    color: #334155;
     margin-top: 4px;
     margin-bottom: 18px;
+    font-weight: 500;
 }
 
 .modal-links {
@@ -387,21 +393,20 @@ body {
     border-radius: 14px;
     text-decoration: none;
     color: #1c2541;
-    background-color: rgba(248, 250, 252, 0.75) !important;
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 0 4px 0px #cbd5e1;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 0px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
 }
 
 .social-link-btn:hover {
-    background-color: rgba(255, 248, 246, 0.9) !important;
+    background-color: rgba(255, 255, 255, 0.85) !important;
     border-color: #ff5722;
     transform: translateY(-2px);
 }
 
 .social-link-btn:active {
     transform: translateY(2px);
-    box-shadow: 0 2px 0px #cbd5e1;
 }
 
 .social-icon {
@@ -416,12 +421,13 @@ body {
 
 .social-text small {
     font-size: 0.72rem;
-    color: #64748b;
+    color: #475569;
 }
 
 /* Footer */
 .footer {
     font-size: 0.75rem;
-    color: #64748b;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     text-align: center;
 }
