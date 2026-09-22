@@ -6,13 +6,28 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #ffffff;
     color: #1c2541;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 24px 16px;
+    position: relative;
+    /* Background Image dari assets/background.png */
+    background: url('assets/background.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Gradient Overlay dari Bawah (Gelap Transparan) ke Atas (Bening) */
+.bg-gradient-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(255, 255, 255, 0.3) 60%, rgba(255, 255, 255, 0.7) 100%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .main-container {
@@ -22,9 +37,11 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    position: relative;
+    z-index: 2;
 }
 
-/* Header & Logo Besar Responsif */
+/* Header & Logo Besar */
 .header {
     margin-bottom: 24px;
     width: 100%;
@@ -35,11 +52,12 @@ body {
 }
 
 .logo-img {
-    width: 100%;           /* Mengisi penuh lebar container */
-    max-width: 380px;      /* Batas maksimal ukuran besar di Laptop/PC */
-    height: auto;          /* Mencegah logo terdistorsi/gepeng */
+    width: 100%;
+    max-width: 380px;
+    height: auto;
     object-fit: contain;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
 }
 
 .brand-title {
@@ -47,19 +65,21 @@ body {
     font-size: 1.4rem;
     font-weight: 800;
     color: #1c2541;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
 }
 
 .brand-tagline {
     font-size: 0.85rem;
-    color: #666;
-    margin-top: 4px;
+    color: #334155;
+    font-weight: 600;
+    margin-top: 2px;
 }
 
-/* CTA Buttons - Rata Tengah Total */
+/* CTA Buttons dengan Efek 3D Shadow & Transparansi Glass */
 .cta-container {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     margin-bottom: 24px;
     width: 100%;
 }
@@ -67,37 +87,56 @@ body {
 .btn-primary, .btn-secondary {
     display: flex;
     align-items: center;
-    justify-content: center; /* Rata tengah konten dalam tombol */
+    justify-content: center;
     padding: 16px 20px;
-    border-radius: 16px;
+    border-radius: 18px;
     text-decoration: none;
-    transition: all 0.2s ease-in-out;
-    border: none;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     width: 100%;
     position: relative;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
+/* Tombol Utama 3D (Orange) */
 .btn-primary {
-    background-color: #ff5722;
+    background: rgba(255, 87, 34, 0.92);
     color: #ffffff;
-    box-shadow: 0 6px 18px rgba(255, 87, 34, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* Shadow 3D Bertingkat */
+    box-shadow: 0 8px 0px #d84315, 0 12px 20px rgba(216, 67, 21, 0.4);
 }
 
 .btn-primary:hover {
-    background-color: #f44336;
+    background: rgba(255, 87, 34, 1);
     transform: translateY(-2px);
+    box-shadow: 0 10px 0px #d84315, 0 16px 24px rgba(216, 67, 21, 0.5);
 }
 
+.btn-primary:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0px #d84315, 0 6px 10px rgba(216, 67, 21, 0.3);
+}
+
+/* Tombol Sekunder 3D (Putih Transparan) */
 .btn-secondary {
-    background-color: #f8f9fa;
-    border: 2px solid #e9ecef;
+    background: rgba(255, 255, 255, 0.85);
     color: #1c2541;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    /* Shadow 3D Bertingkat */
+    box-shadow: 0 6px 0px #cbd5e1, 0 10px 18px rgba(0, 0, 0, 0.12);
 }
 
 .btn-secondary:hover {
-    border-color: #ff5722;
-    background-color: #fff8f6;
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0px #cbd5e1, 0 14px 22px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0px #cbd5e1, 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-icon {
@@ -106,7 +145,7 @@ body {
 }
 
 .btn-text {
-    text-align: center; /* Teks dalam tombol rata tengah */
+    text-align: center;
 }
 
 .btn-text strong {
@@ -117,7 +156,7 @@ body {
 
 .btn-text small {
     font-size: 0.75rem;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .chevron-icon {
@@ -131,17 +170,20 @@ body {
     transform: rotate(180deg);
 }
 
-/* Price Section Toggle */
+/* Price Section & Cards (Glass 3D) */
 .hidden {
     display: none !important;
 }
 
 .price-cards-container {
-    background-color: #f8f9fa;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 20px;
-    border-radius: 16px;
+    border-radius: 20px;
     margin-bottom: 24px;
-    border: 1px solid #e9ecef;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
     width: 100%;
 }
 
@@ -159,10 +201,11 @@ body {
 }
 
 .price-card {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.9);
     padding: 16px;
-    border-radius: 12px;
-    border: 1px solid #e9ecef;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
@@ -187,12 +230,12 @@ body {
 
 .session-detail {
     font-size: 0.75rem;
-    color: #777;
+    color: #64748b;
 }
 
 .separator {
     height: 1px;
-    background-color: #eee;
+    background-color: #e2e8f0;
     margin: 10px 0;
 }
 
@@ -209,26 +252,29 @@ body {
 
 .tc-list {
     font-size: 0.78rem;
-    color: #555;
-    list-style: none; /* Menghilangkan bullet point */
+    color: #475569;
+    list-style: none;
     padding: 0;
 }
 
-/* Info Section & Lokasi Rata Tengah */
+/* Info Cards & Lokasi Rata Tengah Glass 3D */
 .info-section {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 28px;
     width: 100%;
 }
 
 .info-card {
-    background-color: #f8f9fa;
-    padding: 16px 18px;
-    border-radius: 16px;
-    text-align: center; /* Rata tengah */
-    border: 1px solid #e9ecef;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 18px 20px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 6px 0px #cbd5e1, 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .info-card h3 {
@@ -239,19 +285,20 @@ body {
 
 .info-card p {
     font-size: 0.8rem;
-    color: #666;
+    color: #475569;
 }
 
 .location-list {
     font-size: 0.8rem;
-    color: #444;
-    list-style: none; /* Hilangkan titik bullet */
+    color: #334155;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .location-list li {
     margin-bottom: 4px;
+    font-weight: 500;
 }
 
 /* Modal Pop-up */
@@ -261,7 +308,8 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -270,14 +318,15 @@ body {
 }
 
 .modal-card {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.95);
     padding: 24px 20px;
-    border-radius: 18px;
+    border-radius: 22px;
     width: 100%;
     max-width: 380px;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
     text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .close-modal-btn {
@@ -287,7 +336,7 @@ body {
     background: none;
     border: none;
     font-size: 1.6rem;
-    color: #888;
+    color: #64748b;
     cursor: pointer;
 }
 
@@ -299,7 +348,7 @@ body {
 
 .modal-subtitle {
     font-size: 0.78rem;
-    color: #666;
+    color: #64748b;
     margin-top: 4px;
     margin-bottom: 18px;
 }
@@ -307,25 +356,32 @@ body {
 .modal-links {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .social-link-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 14px;
-    border-radius: 12px;
+    padding: 14px 16px;
+    border-radius: 14px;
     text-decoration: none;
     color: #1c2541;
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 0px #cbd5e1;
     transition: all 0.2s ease;
 }
 
 .social-link-btn:hover {
     background-color: #fff8f6;
     border-color: #ff5722;
+    transform: translateY(-2px);
+}
+
+.social-link-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0px #cbd5e1;
 }
 
 .social-icon {
@@ -340,12 +396,13 @@ body {
 
 .social-text small {
     font-size: 0.72rem;
-    color: #666;
+    color: #64748b;
 }
 
 /* Footer */
 .footer {
     font-size: 0.75rem;
-    color: #aaa;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
     text-align: center;
 }
