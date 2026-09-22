@@ -186,20 +186,20 @@ body {
     transform: rotate(180deg);
 }
 
-/* Price Section & Cards (Glass 3D) */
+/* Price Section & Cards (Glassmorphism 3D Transparan Blur) */
 .hidden {
     display: none !important;
 }
 
 .price-cards-container {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
     padding: 20px;
     border-radius: 20px;
     margin-bottom: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     width: 100%;
 }
 
@@ -217,11 +217,13 @@ body {
 }
 
 .price-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 16px;
     border-radius: 14px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
@@ -251,7 +253,7 @@ body {
 
 .separator {
     height: 1px;
-    background-color: #e2e8f0;
+    background-color: rgba(226, 232, 240, 0.6);
     margin: 10px 0;
 }
 
@@ -283,14 +285,14 @@ body {
 }
 
 .info-card {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
     padding: 18px 20px;
     border-radius: 20px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 6px 0px #cbd5e1, 0 10px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .info-card h3 {
@@ -334,7 +336,9 @@ body {
 }
 
 .modal-card {
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     padding: 24px 20px;
     border-radius: 22px;
     width: 100%;
@@ -342,7 +346,7 @@ body {
     position: relative;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .close-modal-btn {
@@ -383,14 +387,14 @@ body {
     border-radius: 14px;
     text-decoration: none;
     color: #1c2541;
-    background-color: #f8fafc;
+    background-color: rgba(248, 250, 252, 0.8);
     border: 1px solid #e2e8f0;
     box-shadow: 0 4px 0px #cbd5e1;
     transition: all 0.2s ease;
 }
 
 .social-link-btn:hover {
-    background-color: #fff8f6;
+    background-color: rgba(255, 248, 246, 0.95);
     border-color: #ff5722;
     transform: translateY(-2px);
 }
