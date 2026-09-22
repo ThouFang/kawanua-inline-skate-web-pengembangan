@@ -13,7 +13,8 @@ body {
     min-height: 100vh;
     padding: 24px 16px;
     position: relative;
-    /* Panggilan Gambar Background */
+    
+    /* Perbaikan nama file menggunakan 'B' kapital (Background.png) */
     background-image: url('assets/Background.png');
     background-repeat: no-repeat;
     background-position: center center;
