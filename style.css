@@ -28,7 +28,7 @@ body {
     background-attachment: scroll;
 }
 
-/* Overlay Bening Tipis */
+/* Overlay Bening dengan Gradien Putih di Atas untuk Memperjelas Logo & Title Header */
 .bg-gradient-overlay {
     position: fixed;
     top: 0;
@@ -36,10 +36,11 @@ body {
     width: 100vw;
     height: 100vh;
     background: linear-gradient(
-        to top, 
-        rgba(15, 23, 42, 0.4) 0%,   
-        rgba(255, 255, 255, 0.1) 50%, 
-        rgba(15, 23, 42, 0.2) 100%   
+        to bottom, 
+        rgba(255, 255, 255, 0.88) 0%,   /* Putih terang tebal di paling atas (area logo) */
+        rgba(255, 255, 255, 0.65) 25%,  /* Putih lembut menutupi tagline header */
+        rgba(255, 255, 255, 0.15) 55%,  /* Bening di tengah agar background stiker terlihat */
+        rgba(15, 23, 42, 0.35) 100%     /* Gelap tipis di paling bawah */
     );
     pointer-events: none;
     z-index: 1;
@@ -57,7 +58,7 @@ body {
     background: transparent !important;
 }
 
-/* Header Logo */
+/* Header Logo & Title Warna Biru Gelap Presisi */
 .header {
     margin-bottom: 24px;
     width: 100%;
@@ -73,23 +74,23 @@ body {
     height: auto;
     object-fit: contain;
     margin-bottom: 8px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
 .brand-title {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.4rem;
     font-weight: 800;
-    color: #ffffff;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    color: #1c2541; /* Biru gelap murni sesuai warna teks utama */
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .brand-tagline {
     font-size: 0.85rem;
-    color: #f1f5f9;
+    color: #334155; /* Biru gelap keabuan */
     font-weight: 600;
     margin-top: 2px;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 /* CTA Buttons 3D */
@@ -238,6 +239,7 @@ body {
 .session-title {
     font-weight: 700;
     font-size: 0.9rem;
+    color: #1c2541;
 }
 
 .session-price {
@@ -266,6 +268,7 @@ body {
 .tc-title {
     font-size: 0.85rem;
     font-weight: 700;
+    color: #1c2541;
     margin-bottom: 6px;
 }
 
@@ -287,8 +290,8 @@ body {
 }
 
 .info-card {
-    background: rgba(255, 255, 255, 0.3) !important; /* Dibuat 30% saja agar stiker belakang menembus */
-    backdrop-filter: blur(4px) !important;             /* Blur diturunkan agar stiker belakang terlihat jelas */
+    background: rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(4px) !important;
     -webkit-backdrop-filter: blur(4px) !important;
     padding: 18px 20px;
     border-radius: 20px;
@@ -299,20 +302,20 @@ body {
 
 .info-card h3 {
     font-size: 1rem;
-    color: #0f172a;
+    color: #1c2541;
     font-weight: 800;
     margin-bottom: 8px;
 }
 
 .info-card p {
     font-size: 0.82rem;
-    color: #0f172a;
+    color: #1c2541;
     font-weight: 600;
 }
 
 .location-list {
     font-size: 0.85rem;
-    color: #0f172a;
+    color: #1c2541;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -341,7 +344,7 @@ body {
 }
 
 .modal-card {
-    background: rgba(255, 255, 255, 0.55) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     padding: 24px 20px;
@@ -427,7 +430,8 @@ body {
 /* Footer */
 .footer {
     font-size: 0.75rem;
-    color: #ffffff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    color: #1c2541;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     text-align: center;
 }
