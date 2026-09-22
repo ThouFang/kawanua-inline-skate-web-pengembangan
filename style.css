@@ -14,7 +14,7 @@ body {
     padding: 24px 16px;
     position: relative;
     /* Background Image dari assets/background.png */
-    background: url('assets/background.png') no-repeat center center fixed;
+    background: url('assets/Background.png') no-repeat center center fixed;
     background-size: cover;
 }
 
