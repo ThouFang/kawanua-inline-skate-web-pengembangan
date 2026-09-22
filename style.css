@@ -13,19 +13,28 @@ body {
     min-height: 100vh;
     padding: 24px 16px;
     position: relative;
-    /* Background Image dari assets/background.png */
-    background: url('assets/Background.png') no-repeat center center fixed;
+    /* Panggilan Gambar Background */
+    background-image: url('assets/background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover;
+    background-attachment: fixed;
 }
 
-/* Gradient Overlay dari Bawah (Gelap Transparan) ke Atas (Bening) */
+/* Gradient Transparan Tipis dari Bawah ke Atas */
 .bg-gradient-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(255, 255, 255, 0.3) 60%, rgba(255, 255, 255, 0.7) 100%);
+    /* Menggunakan opacity transparan yang lebih tipis (0.35 sampai 0.1) */
+    background: linear-gradient(
+        to top, 
+        rgba(15, 23, 42, 0.35) 0%,   /* Transparan gelap tipis di bawah */
+        rgba(255, 255, 255, 0.1) 50%, /* Sangat bening di tengah */
+        rgba(255, 255, 255, 0.4) 100% /* Transparan terang tipis di atas */
+    );
     pointer-events: none;
     z-index: 1;
 }
