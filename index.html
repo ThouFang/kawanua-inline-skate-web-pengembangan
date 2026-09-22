@@ -14,20 +14,20 @@
 </head>
 <body>
 
-    <!-- Overlay Gradient dari Bawah ke Atas -->
+    <!-- Layer Gradient Overlay Transparan untuk Efek Latar -->
     <div class="bg-gradient-overlay"></div>
 
     <div class="main-container">
-        <!-- Header Logo & Identity -->
+        <!-- Header Logo & Identity (Rata Tengah & Logo Besar) -->
         <header class="header">
             <img src="logo.png" alt="KAWANUA Inline Skate School" class="logo-img">
             <h1 class="brand-title">KAWANUA INLINE SKATE</h1>
             <p class="brand-tagline">Private Inline Skate School in Manado</p>
         </header>
 
-        <!-- Main Call to Action (CTA) -->
+        <!-- Main Call to Action (CTA) Buttons 3D -->
         <main class="cta-container">
-            <!-- Tombol 1: Form Pendaftaran (3D) -->
+            <!-- Tombol 1: Form Pendaftaran -->
             <a href="register/index.html" class="btn-primary">
                 <span class="btn-icon">📝</span>
                 <div class="btn-text">
@@ -36,7 +36,7 @@
                 </div>
             </a>
 
-            <!-- Tombol 2: Toggle Price List (3D) -->
+            <!-- Tombol 2: Toggle Price List (Accordion Dropdown) -->
             <button type="button" class="btn-secondary" id="togglePriceBtn">
                 <span class="btn-icon">💰</span>
                 <div class="btn-text">
@@ -46,7 +46,7 @@
                 <span class="chevron-icon">▼</span>
             </button>
 
-            <!-- Tombol 3: Modal Social Media & Komunitas (3D) -->
+            <!-- Tombol 3: Trigger Pop-Up Modal Social Media & Komunitas -->
             <button type="button" class="btn-secondary" id="openSocialModalBtn">
                 <span class="btn-icon">🌐</span>
                 <div class="btn-text">
@@ -56,7 +56,7 @@
             </button>
         </main>
 
-        <!-- Price List Section (Hidden by default) -->
+        <!-- Price List Section (Glassmorphism Transparan - Toggle Hidden) -->
         <section class="price-cards-container hidden" id="priceSection">
             <h2 class="price-list-title">CLASS PRICE LIST</h2>
             
@@ -104,7 +104,7 @@
             </div>
         </section>
 
-        <!-- Information Highlights -->
+        <!-- Information Highlights (Daftar Lokasi & Program - Glassmorphism) -->
         <section class="info-section">
             <div class="info-card">
                 <h3>📍 Lokasi Latihan</h3>
@@ -128,7 +128,7 @@
         </footer>
     </div>
 
-    <!-- POP-UP MODAL SOCIAL MEDIA -->
+    <!-- POP-UP MODAL SOCIAL MEDIA & KOMUNITAS -->
     <div class="modal-overlay hidden" id="socialModal">
         <div class="modal-card">
             <button type="button" class="close-modal-btn" id="closeSocialModalBtn">&times;</button>
@@ -136,7 +136,7 @@
             <p class="modal-subtitle">Kunjungi dan ikuti keseruan latihan kami di:</p>
             
             <div class="modal-links">
-                <!-- Instagram -->
+                <!-- Instagram Link -->
                 <a href="https://www.instagram.com/kawanua_sekolah_sepaturoda/" target="_blank" rel="noopener noreferrer" class="social-link-btn">
                     <span class="social-icon">📸</span>
                     <div class="social-text">
@@ -145,7 +145,7 @@
                     </div>
                 </a>
 
-                <!-- Reclub -->
+                <!-- Reclub Link -->
                 <a href="https://reclub.co/clubs/@kawanuainlineskate" target="_blank" rel="noopener noreferrer" class="social-link-btn">
                     <span class="social-icon">🏆</span>
                     <div class="social-text">
@@ -157,6 +157,7 @@
         </div>
     </div>
 
+    <!-- Panggil Script JS -->
     <script src="script.js"></script>
 </body>
 </html>
