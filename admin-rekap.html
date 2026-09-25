@@ -137,6 +137,26 @@
     </div>
 
     <script>
+        // Proteksi Akses Halaman Admin
+document.addEventListener('DOMContentLoaded', () => {
+    const session = JSON.parse(localStorage.getItem('kawanuaUserSession'));
+    
+    // Jika belum login atau bukan admin, tendang kembali ke halaman login
+    if (!session || session.role !== 'admin') {
+        alert('Akses Ditolak! Anda harus login sebagai Admin.');
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    // Panggil fungsi muat data rekap pendaftar
+    loadRegistrations();
+});
+
+// Fungsi Logout
+function logout() {
+    localStorage.removeItem('kawanuaUserSession');
+    window.location.href = 'login.html';
+}
         document.addEventListener('DOMContentLoaded', loadRegistrations);
 
         function loadRegistrations() {
