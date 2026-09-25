@@ -63,42 +63,61 @@
     </div>
 
     <script>
-        // Membaca Data Transaksi dari LocalStorage (Diisi dari Form Register)
-        document.addEventListener('DOMContentLoaded', () => {
-            const bookingData = JSON.parse(localStorage.getItem('kawanuaBookingData')) || {
-                nama: 'Calon Murid',
-                phone: '-',
-                paket: 'Sesi Latihan Private',
-                lokasi: 'Godbless Park',
-                total: '175.000'
-            };
+    document.addEventListener('DOMContentLoaded', () => {
+        // Ambil data pendaftaran dari localStorage
+        const bookingData = JSON.parse(localStorage.getItem('kawanuaBookingData')) || {
+            nama: 'Calon Murid',
+            phone: '-',
+            paket: 'Private Class',
+            jadwal: 'Godbless Park',
+            total: '175.000',
+            kategori: 'Anak-anak',
+            coach: 'Coach'
+        };
 
-            document.getElementById('summaryName').innerText = bookingData.nama;
-            document.getElementById('summaryPhone').innerText = bookingData.phone;
-            document.getElementById('summaryPackage').innerText = bookingData.paket;
-            document.getElementById('summaryLocation').innerText = bookingData.lokasi;
-            document.getElementById('summaryTotal').innerText = 'Rp ' + bookingData.total;
+        // Isi tampilan ringkasan transaksi
+        document.getElementById('summaryName').innerText = bookingData.nama;
+        document.getElementById('summaryPhone').innerText = bookingData.phone;
+        document.getElementById('summaryPackage').innerText = bookingData.paket;
+        document.getElementById('summaryLocation').innerText = bookingData.jadwal;
+        document.getElementById('summaryTotal').innerText = 'Rp ' + bookingData.total;
 
-            // Keterangan Nomor Admin WA
-            const adminPhoneNumber = '628XXXXXXXXXX'; // Ganti dengan nomor WA Admin (contoh: 6281234567890)
+        // Ganti dengan Nomor Admin WA Kawanua
+        const adminPhoneNumber = "62819xxxxxxx"; 
 
-            document.getElementById('btnCompletePayment').addEventListener('click', () => {
-                // Format Pesan Otomatis ke WA Admin
-                const textMessage = `Halo Admin KAWANUA Inline Skate School! 👋%0A%0A` +
-                    `Saya telah menyelesaikan pembayaran pendaftaran Les Private.%0A%0A` +
-                    `📌 *DETAIL PENDAFTARAN:*%0A` +
-                    `• *Nama Murid:* ${bookingData.nama}%0A` +
-                    `• *No. WA:* ${bookingData.phone}%0A` +
-                    `• *Paket:* ${bookingData.paket}%0A` +
-                    `• *Lokasi:* ${bookingData.lokasi}%0A` +
-                    `• *Total Transaksi:* Rp ${bookingData.total}%0A` +
-                    `• *Status:* Sudah Transfer / Lunas%0A%0A` +
-                    `Berikut saya lampirkan bukti transfernya. Terima kasih!`;
+        document.getElementById('btnCompletePayment').addEventListener('click', () => {
+            let guardianText = bookingData.kategori === "Anak-anak" 
+                ? `• Nama Wali/Orang Tua: *${bookingData.namaWali}*\n• WA Wali: *${bookingData.phone}*`
+                : `• WA Peserta: *${bookingData.phone}*`;
 
-                // Auto Redirect ke WhatsApp
-                window.location.href = `https://wa.me/${adminPhoneNumber}?text=${textMessage}`;
-            });
+            const waMessage = 
+`*PENDATAAN & PEMBAYARAN LES PRIVATE*
+*KAWANUA INLINE SKATE SCHOOL*
+--------------------------------------------
+*1. DATA MURID*
+• Nama Murid: *${bookingData.nama}*
+• Usia: *${bookingData.usia} Tahun*
+• Kategori: *${bookingData.kategori}*
+${guardianText}
+
+*2. PENDATAAN LATIHAN*
+• Tingkat Kemampuan: *${bookingData.skill}*
+• Status Alat: *${bookingData.alat}*
+• Paket Latihan: *${bookingData.paket}*
+• Pilihan Coach: *${bookingData.coach}*
+• Rencana Jadwal/Lokasi: *${bookingData.jadwal}*
+
+--------------------------------------------
+💳 *STATUS PEMBAYARAN:*
+• Total: *Rp ${bookingData.total}*
+• Status: *Sudah Transfer / Lunas*
+--------------------------------------------
+Berikut saya sertakan lampiran bukti transfer pembayaran. Terima kasih Admin!`;
+
+            // Buka WhatsApp Admin
+            window.location.href = `https://wa.me/${adminPhoneNumber}?text=${encodeURIComponent(waMessage)}`;
         });
-    </script>
+    });
+</script>
 </body>
 </html>
