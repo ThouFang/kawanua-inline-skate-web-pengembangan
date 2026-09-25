@@ -1,45 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // NOMOR WHATSAPP ADMIN KAWANUA (Sesuaikan nomor WhatsApp Admin Anda)
-    const adminWA = "6281919208099"; // Ganti dengan nomor WhatsApp Admin Aktif (format 62...)
+    // NOMOR WHATSAPP ADMIN KAWANUA (Ubah sesuai nomor aktif)
+    const adminPhoneNumber = "6281919208099";
 
-    // 1. LOGIKA TOMBOL SURVEY (Kategori, Skill, Alat, Paket, Coach)
+    const form = document.getElementById("surveyRegisterForm");
     const surveyButtons = document.querySelectorAll(".survey-btn");
     
-    surveyButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const fieldName = this.getAttribute("data-field");
-            const fieldValue = this.getAttribute("data-value");
+    const secGuardianData = document.getElementById("sec-guardianData");
+    const secAdultPhone = document.getElementById("sec-adultPhone");
 
-            // Unselect tombol lain dalam grup yang sama
-            const parentSection = this.closest(".form-section");
-            parentSection.querySelectorAll(".survey-btn").forEach(btn => btn.classList.remove("active"));
-
-            // Set tombol yang diklik menjadi aktif
-            this.classList.add("active");
-
-            // Set nilai ke hidden input
-            const hiddenInput = document.getElementById(fieldName);
-            if (hiddenInput) {
-                hiddenInput.value = fieldValue;
-            }
-
-            // Tampilkan/Sembunyikan Form Wali berdasarkan Kategori Usia
-            if (fieldName === "ageGroup") {
-                const secGuardian = document.getElementById("sec-guardianData");
-                const secAdultPhone = document.getElementById("sec-adultPhone");
-
-                if (fieldValue === "Anak-anak") {
-                    secGuardian.classList.remove("hidden");
-                    secAdultPhone.classList.add("hidden");
-                } else {
-                    secGuardian.classList.add("hidden");
-                    secAdultPhone.classList.remove("hidden");
-                }
-            }
-        });
-    });
-
-    // 2. FUNGSI GENERATE PASSWORD ACAK
+    // Helper: Buat Password Acak 8 Karakter untuk Portal Murid
     function generateRandomPassword() {
         const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let password = '';
@@ -49,51 +18,157 @@ document.addEventListener("DOMContentLoaded", function () {
         return password;
     }
 
-    // 3. LOGIKA SUBMIT FORM
-    const form = document.getElementById("surveyRegisterForm");
+    // 1. Logika Klik Tombol Survei (Kartu Pilihan)
+    surveyButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const fieldName = this.getAttribute("data-field");
+            const value = this.getAttribute("data-value");
 
+            // Matikan status aktif pada tombol lain dalam kelompok yang sama
+            const siblings = document.querySelectorAll(`.survey-btn[data-field="${fieldName}"]`);
+            siblings.forEach(btn => btn.classList.remove("active"));
+
+            // Aktifkan tombol yang diklik
+            this.classList.add("active");
+
+            // Simpan nilai pilihan ke input hidden
+            const hiddenInput = document.getElementById(fieldName);
+            if (hiddenInput) {
+                hiddenInput.value = value;
+            }
+
+            // Bersihkan indikator error jika opsi sudah dipilih
+            const parentSection = this.closest(".form-section");
+            if (parentSection) {
+                parentSection.classList.remove("invalid-section");
+            }
+
+            // Logika Cabang: Anak-anak vs Dewasa
+            if (fieldName === "ageGroup") {
+                if (value === "Anak-anak") {
+                    secGuardianData.classList.remove("hidden");
+                    secAdultPhone.classList.add("hidden");
+                } else if (value === "Dewasa") {
+                    secGuardianData.classList.add("hidden");
+                    secAdultPhone.classList.remove("hidden");
+                }
+            }
+        });
+    });
+
+    // Reset warna merah error saat pengguna mulai mengetik
+    document.querySelectorAll("input").forEach(input => {
+        input.addEventListener("input", function () {
+            const group = this.closest(".input-group");
+            if (group) group.classList.remove("invalid-input");
+        });
+    });
+
+    // 2. Validasi & Pengiriman Form
     if (form) {
         form.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            // Ambil semua data input
-            const ageGroup = document.getElementById("ageGroup").value;
+            let isValid = true;
+            let firstInvalidElement = null;
+
+            // Fungsi Validasi Section Opsi Survei
+            function validateSurveySection(sectionId, hiddenInputId) {
+                const section = document.getElementById(sectionId);
+                const hiddenInput = document.getElementById(hiddenInputId);
+                const val = hiddenInput ? hiddenInput.value : "";
+
+                if (!val) {
+                    if (section) section.classList.add("invalid-section");
+                    if (!firstInvalidElement) firstInvalidElement = section;
+                    isValid = false;
+                } else {
+                    if (section) section.classList.remove("invalid-section");
+                }
+            }
+
+            // Fungsi Validasi Input Teks
+            function validateTextInput(groupId, inputId) {
+                const group = document.getElementById(groupId);
+                const input = document.getElementById(inputId);
+
+                if (!input || !input.value.trim()) {
+                    if (group) group.classList.add("invalid-input");
+                    if (!firstInvalidElement && input) firstInvalidElement = input;
+                    isValid = false;
+                } else {
+                    if (group) group.classList.remove("invalid-input");
+                }
+            }
+
+            // Validasi 1: Kategori Usia
+            validateSurveySection("sec-ageGroup", "ageGroup");
+
+            // Validasi 2: Data Diri Murid
+            validateTextInput("group-studentName", "studentName");
+            validateTextInput("group-studentAge", "studentAge");
+
+            // Validasi 3: Kondisi Wali vs Dewasa
+            const ageGroupVal = document.getElementById("ageGroup").value;
+            if (ageGroupVal === "Anak-anak") {
+                validateTextInput("group-guardianName", "guardianName");
+                validateTextInput("group-guardianWa", "guardianWa");
+            } else if (ageGroupVal === "Dewasa") {
+                validateTextInput("group-adultWa", "adultWa");
+            }
+
+            // Validasi 4, 5, 6, 7: Option Sections
+            validateSurveySection("sec-skillLevel", "skillLevel");
+            validateSurveySection("sec-equipment", "equipment");
+            validateSurveySection("sec-package", "package");
+            validateSurveySection("sec-coach", "coach");
+
+            // Validasi 8: Schedule
+            validateTextInput("group-scheduleText", "scheduleText");
+
+            // Jika ada input yang belum terisi: Scroll ke input bermasalah pertama
+            if (!isValid) {
+                if (firstInvalidElement) {
+                    firstInvalidElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+                return;
+            }
+
+            // 3. Ambil Seluruh Data Isian
             const studentName = document.getElementById("studentName").value.trim();
             const studentAge = document.getElementById("studentAge").value.trim();
-            const guardianName = document.getElementById("guardianName").value.trim();
-            const guardianWa = document.getElementById("guardianWa").value.trim();
-            const adultWa = document.getElementById("adultWa").value.trim();
             const skillLevel = document.getElementById("skillLevel").value;
             const equipment = document.getElementById("equipment").value;
-            const packageVal = document.getElementById("package").value;
-            const coachVal = document.getElementById("coach").value;
+            const packageChoice = document.getElementById("package").value;
+            const coachChoice = document.getElementById("coach").value;
             const scheduleText = document.getElementById("scheduleText").value.trim();
 
-            // Validasi Sederhana
-            if (!ageGroup || !studentName || !studentAge || !skillLevel || !equipment || !packageVal || !coachVal || !scheduleText) {
-                alert("⚠️ Mohon lengkapi semua isian survei yang bertanda bintang (*)");
-                return;
+            let activeWa = "";
+            let guardianInfoText = "";
+            let guardianName = "";
+
+            if (ageGroupVal === "Anak-anak") {
+                guardianName = document.getElementById("guardianName").value.trim();
+                activeWa = document.getElementById("guardianWa").value.trim();
+                guardianInfoText = `• Nama Wali/Orang Tua: *${guardianName}*\n• WA Wali: *${activeWa}*`;
+            } else {
+                activeWa = document.getElementById("adultWa").value.trim();
+                guardianInfoText = `• WA Peserta: *${activeWa}*`;
             }
 
-            const activePhone = ageGroup === "Anak-anak" ? guardianWa : adultWa;
-            if (!activePhone) {
-                alert("⚠️ Mohon isi Nomor WhatsApp aktif Anda!");
-                return;
-            }
-
-            // Generate NIM & Password di belakang layar untuk Admin
+            // 4. Generate NIM & Password Otomatis untuk Rekap Admin & Portal Murid
             const timestamp = Date.now().toString().slice(-4);
             const generatedNIM = `KWN-2026${timestamp}`;
             const generatedPassword = generateRandomPassword();
 
-            // Structure Data Murid
+            // Structure Data Portal Murid
             const newStudentData = {
                 nim: generatedNIM,
                 pass: generatedPassword,
                 nama: studentName,
-                hp: activePhone,
-                paket: packageVal,
-                coach: coachVal,
+                hp: activeWa,
+                paket: packageChoice,
+                coach: coachChoice,
                 absensi: [],
                 stats: { balance: 0, braking: 0, slalom: 0 },
                 materiTerakhir: "Belum ada materi atau evaluasi dari coach."
@@ -103,13 +178,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const newRegistration = {
                 tanggal: new Date().toLocaleDateString("id-ID"),
                 nama: studentName,
-                hp: activePhone,
-                paket: packageVal,
+                hp: activeWa,
+                paket: packageChoice,
                 nim: generatedNIM,
-                pass: generatedPassword
+                pass: generatedPassword,
+                status: "Pending Transaksi"
             };
 
-            // Simpan ke LocalStorage
+            // Simpan ke LocalStorage agar Rekap Admin & Login Langsung Ter-update
             let allStudents = JSON.parse(localStorage.getItem("kawanuaStudentsDB")) || {};
             allStudents[generatedNIM] = newStudentData;
             localStorage.setItem("kawanuaStudentsDB", JSON.stringify(allStudents));
@@ -118,25 +194,33 @@ document.addEventListener("DOMContentLoaded", function () {
             rekapAdmin.push(newRegistration);
             localStorage.setItem("kawanuaRegistrations", JSON.stringify(rekapAdmin));
 
-            // FORMAT PESAN KIRIM KE WHATSAPP ADMIN
-            let waText = `Halo Admin KAWANUA Inline Skate, saya ingin mendaftar Les Private!%0A%0A`;
-            waText += `📋 *DETAIL SURVEI PENDAFTARAN:*%0A`;
-            waText += `• *Kategori Usia:* ${ageGroup}%0A`;
-            waText += `• *Nama Murid:* ${studentName}%0A`;
-            waText += `• *Usia:* ${studentAge} Tahun%0A`;
-            if (ageGroup === "Anak-anak") {
-                waText += `• *Nama Wali:* ${guardianName}%0A`;
-            }
-            waText += `• *No. WA:* ${activePhone}%0A`;
-            waText += `• *Kemampuan:* ${skillLevel}%0A`;
-            waText += `• *Status Alat:* ${equipment}%0A`;
-            waText += `• *Paket Latihan:* ${packageVal}%0A`;
-            waText += `• *Pilihan Coach:* ${coachVal}%0A`;
-            waText += `• *Rencana Jadwal:* ${scheduleText}%0A%0A`;
-            waText += `Mohon info langkah konfirmasi pembayaran selanjutnya. Terima kasih!`;
+            // 5. Susun Format Pesan WhatsApp Lengkap dengan Keterangan Transaksi
+            const waMessage = 
+`*PENDATAAN MURID BARU LES PRIVATE*
+*KAWANUA INLINE SKATE SCHOOL*
+--------------------------------------------
+*1. DATA MURID*
+• Nama Murid: *${studentName}*
+• Usia Exact: *${studentAge} Tahun*
+• Kategori: *${ageGroupVal}*
+${guardianInfoText}
 
-            // Buka WhatsApp Otomatis
-            window.open(`https://wa.me/${adminWA}?text=${waText}`, '_blank');
+*2. DETAIL LATIHAN & COACH*
+• Tingkat Kemampuan: *${skillLevel}*
+• Status Peralatan: *${equipment}*
+• Paket Pilihan: *${packageChoice}*
+• Pilihan Coach: *${coachChoice}*
+• Rencana Schedule: *${scheduleText}*
+
+*3. KETERANGAN TRANSAKSI & VERIFIKASI*
+• Kode Registrasi: *${generatedNIM}*
+• Status Pendaftaran: *Menunggu Verifikasi & Pembayaran*
+--------------------------------------------
+Mohon instruksi nomor rekening / QRIS pembayaran serta konfirmasi ketersediaan jadwalnya. Terima kasih!`;
+
+            // Buka tautan WhatsApp Admin
+            const encodedUrl = `https://wa.me/${adminPhoneNumber}?text=${encodeURIComponent(waMessage)}`;
+            window.location.href = encodedUrl;
         });
     }
 });
