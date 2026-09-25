@@ -21,6 +21,15 @@
             text-align: left;
         }
 
+        .profile-badge {
+            background: rgba(28, 37, 65, 0.1);
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            font-size: 0.82rem;
+            color: #1c2541;
+        }
+
         .stat-bar-container {
             background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
@@ -36,12 +45,6 @@
             border-radius: 10px;
             transition: width 0.5s ease;
         }
-
-        .materi-list li {
-            margin-bottom: 8px;
-            padding-bottom: 8px;
-            border-bottom: 1px dashed rgba(0,0,0,0.1);
-        }
     </style>
 </head>
 <body>
@@ -54,72 +57,64 @@
             <p class="brand-tagline">Selamat Datang, <span id="studentName">Murid</span>! 👋</p>
         </header>
 
-        <!-- CARD 1: STATISTIK PENINGKATAN -->
+        <!-- KARTU ID MURID -->
         <div class="portal-card">
-            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 12px;">📊 Statistik Peningkatan Skil</h3>
+            <div class="profile-badge">
+                <p><strong>NIM / NIK:</strong> <span id="studentNIM">-</span></p>
+                <p><strong>Paket Latihan:</strong> <span id="studentPaket">-</span></p>
+                <p><strong>Coach Pendamping:</strong> <span id="studentCoach">-</span></p>
+            </div>
+        </div>
+
+        <!-- STATISTIK PENINGKATAN MURID (DINAMIS PER INDIVIDU) -->
+        <div class="portal-card">
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 12px;">📊 Statistik Peningkatan Kemampuan</h3>
             
             <div style="margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
                     <span>Keseimbangan (Balance):</span>
-                    <span>85%</span>
+                    <span id="txtBalance">0%</span>
                 </div>
                 <div class="stat-bar-container">
-                    <div class="stat-bar-fill" style="width: 85%;"></div>
+                    <div class="stat-bar-fill" id="barBalance" style="width: 0%;"></div>
                 </div>
             </div>
 
             <div style="margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
                     <span>Mengerem (Braking):</span>
-                    <span>70%</span>
+                    <span id="txtBraking">0%</span>
                 </div>
                 <div class="stat-bar-container">
-                    <div class="stat-bar-fill" style="width: 70%;"></div>
+                    <div class="stat-bar-fill" id="barBraking" style="width: 0%;"></div>
                 </div>
             </div>
 
             <div>
                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
                     <span>Trik Dasar (Basic Slalom):</span>
-                    <span>50%</span>
+                    <span id="txtSlalom">0%</span>
                 </div>
                 <div class="stat-bar-container">
-                    <div class="stat-bar-fill" style="width: 50%;"></div>
+                    <div class="stat-bar-fill" id="barSlalom" style="width: 0%;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- CARD 2: REKAP ABSENSI -->
+        <!-- REKAP ABSENSI KHUSUS MURID INI -->
         <div class="portal-card">
-            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📅 Kehadiran & Absensi Latihan</h3>
-            <p style="font-size: 0.8rem; color: #475569; margin-bottom: 10px;">Total Sesi Selesai: <strong>3 dari 4 Sesi</strong></p>
-            
-            <ul style="font-size: 0.8rem; color: #1c2541; list-style: none; padding: 0;">
-                <li style="margin-bottom: 6px;">✅ Sesi 1 - Godbless Park (Hadir)</li>
-                <li style="margin-bottom: 6px;">✅ Sesi 2 - Marina Plaza (Hadir)</li>
-                <li style="margin-bottom: 6px;">✅ Sesi 3 - Karpet Biru (Hadir)</li>
-                <li style="color: #64748b;">⏳ Sesi 4 - Next Schedule</li>
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📅 Riwayat Kehadiran Sesi Latihan</h3>
+            <ul id="absensiList" style="font-size: 0.8rem; color: #1c2541; list-style: none; padding: 0;">
+                <!-- Absensi dimasukkan otomatis via JS -->
             </ul>
         </div>
 
-        <!-- CARD 3: MATERI PELAJARAN -->
+        <!-- MATERI TERAKHIR DARI COACH -->
         <div class="portal-card">
-            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📚 Materi & Panduan Latihan</h3>
-            
-            <ul class="materi-list" style="font-size: 0.8rem; color: #1c2541; list-style: none; padding: 0;">
-                <li>
-                    <strong>1. Postur Dasar V-Shape</strong>
-                    <p style="font-size: 0.72rem; color: #475569;">Menjaga keseimbangan lutut ditekuk & posisi kaki membentuk huruf V.</p>
-                </li>
-                <li>
-                    <strong>2. Teknik Jatuh Aman (Safety Fall)</strong>
-                    <p style="font-size: 0.72rem; color: #475569;">Jatuh ke depan menggunakan knee pad dan wrist guard.</p>
-                </li>
-                <li>
-                    <strong>3. Heel Brake & T-Stop</strong>
-                    <p style="font-size: 0.72rem; color: #475569;">Mengerem secara bertahap saat meluncur cepat.</p>
-                </li>
-            </ul>
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📚 Catatan Evaluasi & Materi Latihan</h3>
+            <p id="materiNote" style="font-size: 0.82rem; color: #334155; line-height: 1.4; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 10px;">
+                Belum ada evaluasi materi.
+            </p>
         </div>
 
         <!-- Tombol Logout -->
@@ -136,17 +131,55 @@
     </div>
 
     <script>
-        // Check Session Login Murid
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('kawanuaUserSession'));
             
+            // Validasi Sesi Login Murid
             if (!session || session.role !== 'murid') {
-                alert('Akses Ditolak! Silakan login sebagai Murid.');
+                alert('Akses Ditolak! Anda harus login terlebih dahulu.');
                 window.location.href = 'login.html';
                 return;
             }
 
-            document.getElementById('studentName').innerText = session.user.toUpperCase();
+            // Ambil Seluruh Database Murid
+            const allStudents = JSON.parse(localStorage.getItem('kawanuaStudentsDB')) || {};
+            const currentStudent = allStudents[session.nim];
+
+            if (!currentStudent) {
+                alert('Data murid tidak ditemukan.');
+                logout();
+                return;
+            }
+
+            // 1. TAMPILKAN HEADER & PROFILE
+            document.getElementById('studentName').innerText = currentStudent.nama;
+            document.getElementById('studentNIM').innerText = currentStudent.nim;
+            document.getElementById('studentPaket').innerText = currentStudent.paket;
+            document.getElementById('studentCoach').innerText = currentStudent.coach;
+
+            // 2. TAMPILKAN STATISTIK INDIVIDU
+            document.getElementById('txtBalance').innerText = currentStudent.stats.balance + '%';
+            document.getElementById('barBalance').style.width = currentStudent.stats.balance + '%';
+
+            document.getElementById('txtBraking').innerText = currentStudent.stats.braking + '%';
+            document.getElementById('barBraking').style.width = currentStudent.stats.braking + '%';
+
+            document.getElementById('txtSlalom').innerText = currentStudent.stats.slalom + '%';
+            document.getElementById('barSlalom').style.width = currentStudent.stats.slalom + '%';
+
+            // 3. TAMPILKAN ABSENSI INDIVIDU
+            const absensiContainer = document.getElementById('absensiList');
+            absensiContainer.innerHTML = '';
+            currentStudent.absensi.forEach(item => {
+                const icon = item.status === 'Hadir' ? '✅' : '⚠️';
+                const li = document.createElement('li');
+                li.style.marginBottom = '6px';
+                li.innerHTML = `${icon} <strong>${item.tanggal}</strong> - ${item.lokasi} (<em>${item.status}</em>)`;
+                absensiContainer.appendChild(li);
+            });
+
+            // 4. TAMPILKAN EVALUASI MATERI
+            document.getElementById('materiNote').innerText = currentStudent.materiTerakhir;
         });
 
         function logout() {
