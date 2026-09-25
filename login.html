@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Sistem - KAWANUA Inline Skate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-card {
+            background: rgba(255, 255, 255, 0.75) !important;
+            backdrop-filter: blur(14px) !important;
+            padding: 24px 20px;
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+            width: 100%;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #1c2541;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.85);
+            font-size: 0.88rem;
+            outline: none;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient-overlay"></div>
+
+    <div class="main-container">
+        <header class="header">
+            <h1 class="brand-title">LOGIN AKUN</h1>
+            <p class="brand-tagline">KAWANUA Inline Skate School</p>
+        </header>
+
+        <div class="login-card">
+            <h2 style="font-size: 1rem; text-align: center; color: #1c2541; margin-bottom: 16px;">
+                Masuk ke Akses Portal
+            </h2>
+
+            <div class="error-msg" id="loginError">Username atau Password salah!</div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Username / Nama Murid</label>
+                    <input type="text" id="usernameInput" placeholder="Masukkan 'admin' atau nama murid..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="passwordInput" placeholder="Masukkan password..." required>
+                </div>
+
+                <button type="submit" class="btn-primary" style="border: none; width: 100%; margin-top: 10px;">
+                    <span class="btn-icon">🔓</span>
+                    <div class="btn-text">
+                        <strong>Masuk Sekarang</strong>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+        <footer class="footer" style="margin-top: 20px;">
+            <p>&copy; 2026 KAWANUA Inline Skate School</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const user = document.getElementById('usernameInput').value.trim().toLowerCase();
+            const pass = document.getElementById('passwordInput').value.trim();
+            const errorMsg = document.getElementById('loginError');
+
+            // 1. Akun Login Admin
+            if (user === 'admin' && pass === 'admin123') { // Ganti password admin di sini
+                localStorage.setItem('kawanuaUserSession', JSON.stringify({ role: 'admin', user: 'Admin Kawanua' }));
+                window.location.href = 'admin-rekap.html';
+            } 
+            // 2. Akun Login Murid
+            else if (pass === '12345') { // Password standar untuk murid
+                localStorage.setItem('kawanuaUserSession', JSON.stringify({ role: 'murid', user: user }));
+                window.location.href = 'murid-dashboard.html';
+            } 
+            else {
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
