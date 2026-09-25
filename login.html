@@ -95,49 +95,37 @@
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const user = document.getElementById('usernameInput').value.trim();
-            const pass = document.getElementById('passwordInput').value.trim();
-            const errorMsg = document.getElementById('loginError');
+    e.preventDefault();
+    
+    const user = document.getElementById('usernameInput').value.trim();
+    const pass = document.getElementById('passwordInput').value.trim();
+    const errorMsg = document.getElementById('loginError');
 
-            // 1. CEK LOGIN ADMIN
-            if (user.toLowerCase() === 'admin' && pass === 'admin123') {
-                localStorage.setItem('kawanuaUserSession', JSON.stringify({ role: 'admin', user: 'Admin Kawanua' }));
-                window.location.href = 'admin-rekap.html';
-                return;
-            } 
+    // 1. LOGIN ADMIN
+    if (user.toLowerCase() === 'admin' && pass === 'admin123') {
+        localStorage.setItem('kawanuaUserSession', JSON.stringify({ role: 'admin', user: 'Admin Kawanua' }));
+        window.location.href = 'admin-rekap.html';
+        return;
+    } 
 
-            // 2. CEK DATABASE MURID DENGAN NIM/NIK
-            const allStudents = JSON.parse(localStorage.getItem('kawanuaStudentsDB')) || {
-                // Database Contoh Murid Default (Jika Belum Ada Data Baru)
-                "KWN-2026001": {
-                    nim: "KWN-2026001",
-                    pass: "12345",
-                    nama: "Christian Ronaldo",
-                    paket: "Weekend Month Pass",
-                    coach: "Coach Ardiles",
-                    absensi: [
-                        { tanggal: "10 Sept 2026", lokasi: "Godbless Park", status: "Hadir" },
-                        { tanggal: "17 Sept 2026", lokasi: "Marina Plaza", status: "Hadir" },
-                        { tanggal: "24 Sept 2026", lokasi: "Karpet Biru", status: "Izin" }
-                    ],
-                    stats: { balance: 90, braking: 75, slalom: 60 },
-                    materiTerakhir: "Teknik Mengerem T-Stop & Pindah Tumpuan Kaki"
-                },
-                "KWN-2026002": {
-                    nim: "KWN-2026002",
-                    pass: "12345",
-                    nama: "Lionel Messi",
-                    paket: "Weekdays Private",
-                    coach: "Coach Topan",
-                    absensi: [
-                        { tanggal: "12 Sept 2026", lokasi: "Bukit Golf Boulevard", status: "Hadir" }
-                    ],
-                    stats: { balance: 60, braking: 40, slalom: 20 },
-                    materiTerakhir: "Postur Kaki V-Shape & Latihan Keseimbangan Mandiri"
-                }
-            };
+    // 2. AMBIL DATABASE MURID DARI LOCALSTORAGE
+    const allStudents = JSON.parse(localStorage.getItem('kawanuaStudentsDB')) || {};
+
+    // Validasi NIM dan Password
+    const studentData = allStudents[user];
+    if (studentData && studentData.pass === pass) {
+        // Simpan Sesi Login Murid
+        localStorage.setItem('kawanuaUserSession', JSON.stringify({ 
+            role: 'murid', 
+            nim: studentData.nim, 
+            nama: studentData.nama 
+        }));
+        window.location.href = 'murid-dashboard.html';
+    } else {
+        errorMsg.innerText = "NIM/Username atau Password tidak cocok!";
+        errorMsg.style.display = 'block';
+    }
+});
 
             // Simpan database awal ke browser jika belum ada
             if (!localStorage.getItem('kawanuaStudentsDB')) {
