@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Latihan - KAWANUA Inline Skate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-gradient-overlay"></div>
+
+    <div class="main-container">
+        <!-- Header Ringkasan Pembayaran -->
+        <header class="header">
+            <h1 class="brand-title">PEMBAYARAN LATIHAN</h1>
+            <p class="brand-tagline">KAWANUA Inline Skate School</p>
+        </header>
+
+        <!-- Card Transaksi (Glassmorphism 3D Bening) -->
+        <div class="price-cards-container" style="text-align: left;">
+            <h2 class="price-list-title" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.6); padding-bottom: 10px; margin-bottom: 16px;">
+                📋 Ringkasan Pendaftaran
+            </h2>
+
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #1c2541; margin-bottom: 20px;">
+                <p><strong>Nama Murid:</strong> <span id="summaryName">-</span></p>
+                <p><strong>No. WhatsApp:</strong> <span id="summaryPhone">-</span></p>
+                <p><strong>Paket Latihan:</strong> <span id="summaryPackage">-</span></p>
+                <p><strong>Lokasi Latihan:</strong> <span id="summaryLocation">-</span></p>
+                <div class="separator"></div>
+                <p style="font-size: 1.05rem; font-weight: 800; color: #d84315; display: flex; justify-content: space-between;">
+                    <span>Total Pembayaran:</span>
+                    <span id="summaryTotal">Rp 0</span>
+                </p>
+            </div>
+
+            <h3 style="font-size: 0.95rem; text-align: center; margin-bottom: 12px; color: #1c2541;">Scan QRIS / Transfer Pembayaran:</h3>
+            
+            <!-- Tempat Kode QRIS / Rekening Bank -->
+            <div style="background: rgba(255,255,255,0.9); padding: 16px; border-radius: 16px; text-align: center; margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.1);">
+                <!-- Ganti assets/qris.png dengan gambar QRIS Anda -->
+                <img src="assets/qris.png" alt="QRIS Kawanua Inline Skate" style="max-width: 220px; width: 100%; height: auto; border-radius: 12px; margin-bottom: 8px;">
+                <p style="font-size: 0.78rem; color: #64748b; font-weight: 600;">Atas Nama: KAWANUA INLINE SKATE</p>
+            </div>
+
+            <!-- Tombol Otomatis ke WA -->
+            <button id="btnCompletePayment" class="btn-primary" style="border: none; width: 100%;">
+                <span class="btn-icon">✅</span>
+                <div class="btn-text">
+                    <strong>Konfirmasi & Chat Admin WA</strong>
+                    <small>Otomatis kirim detail pendaftaran</small>
+                </div>
+            </button>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2026 KAWANUA Inline Skate School</p>
+        </footer>
+    </div>
+
+    <script>
+        // Membaca Data Transaksi dari LocalStorage (Diisi dari Form Register)
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingData = JSON.parse(localStorage.getItem('kawanuaBookingData')) || {
+                nama: 'Calon Murid',
+                phone: '-',
+                paket: 'Sesi Latihan Private',
+                lokasi: 'Godbless Park',
+                total: '175.000'
+            };
+
+            document.getElementById('summaryName').innerText = bookingData.nama;
+            document.getElementById('summaryPhone').innerText = bookingData.phone;
+            document.getElementById('summaryPackage').innerText = bookingData.paket;
+            document.getElementById('summaryLocation').innerText = bookingData.lokasi;
+            document.getElementById('summaryTotal').innerText = 'Rp ' + bookingData.total;
+
+            // Keterangan Nomor Admin WA
+            const adminPhoneNumber = '628XXXXXXXXXX'; // Ganti dengan nomor WA Admin (contoh: 6281234567890)
+
+            document.getElementById('btnCompletePayment').addEventListener('click', () => {
+                // Format Pesan Otomatis ke WA Admin
+                const textMessage = `Halo Admin KAWANUA Inline Skate School! 👋%0A%0A` +
+                    `Saya telah menyelesaikan pembayaran pendaftaran Les Private.%0A%0A` +
+                    `📌 *DETAIL PENDAFTARAN:*%0A` +
+                    `• *Nama Murid:* ${bookingData.nama}%0A` +
+                    `• *No. WA:* ${bookingData.phone}%0A` +
+                    `• *Paket:* ${bookingData.paket}%0A` +
+                    `• *Lokasi:* ${bookingData.lokasi}%0A` +
+                    `• *Total Transaksi:* Rp ${bookingData.total}%0A` +
+                    `• *Status:* Sudah Transfer / Lunas%0A%0A` +
+                    `Berikut saya lampirkan bukti transfernya. Terima kasih!`;
+
+                // Auto Redirect ke WhatsApp
+                window.location.href = `https://wa.me/${adminPhoneNumber}?text=${textMessage}`;
+            });
+        });
+    </script>
+</body>
+</html>
