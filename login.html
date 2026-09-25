@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Sistem - KAWANUA Inline Skate</title>
+    <title>Login Portal - KAWANUA Inline Skate</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -57,21 +57,21 @@
 
     <div class="main-container">
         <header class="header">
-            <h1 class="brand-title">LOGIN AKUN</h1>
+            <h1 class="brand-title">PORTAL MASUK</h1>
             <p class="brand-tagline">KAWANUA Inline Skate School</p>
         </header>
 
         <div class="login-card">
             <h2 style="font-size: 1rem; text-align: center; color: #1c2541; margin-bottom: 16px;">
-                Masuk ke Akses Portal
+                Masuk ke Portal Murid / Admin
             </h2>
 
-            <div class="error-msg" id="loginError">Username atau Password salah!</div>
+            <div class="error-msg" id="loginError">NIM/NIK atau Password salah!</div>
 
             <form id="loginForm">
                 <div class="form-group">
-                    <label>Username / Nama Murid</label>
-                    <input type="text" id="usernameInput" placeholder="Masukkan 'admin' atau nama murid..." required>
+                    <label>NIM / NIK / Username</label>
+                    <input type="text" id="usernameInput" placeholder="Contoh: KWN-2026001 atau 'admin'..." required>
                 </div>
 
                 <div class="form-group">
@@ -82,7 +82,7 @@
                 <button type="submit" class="btn-primary" style="border: none; width: 100%; margin-top: 10px;">
                     <span class="btn-icon">🔓</span>
                     <div class="btn-text">
-                        <strong>Masuk Sekarang</strong>
+                        <strong>Masuk Akun</strong>
                     </div>
                 </button>
             </form>
@@ -97,21 +97,64 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const user = document.getElementById('usernameInput').value.trim().toLowerCase();
+            const user = document.getElementById('usernameInput').value.trim();
             const pass = document.getElementById('passwordInput').value.trim();
             const errorMsg = document.getElementById('loginError');
 
-            // 1. Akun Login Admin
-            if (user === 'admin' && pass === 'admin123') { // Ganti password admin di sini
+            // 1. CEK LOGIN ADMIN
+            if (user.toLowerCase() === 'admin' && pass === 'admin123') {
                 localStorage.setItem('kawanuaUserSession', JSON.stringify({ role: 'admin', user: 'Admin Kawanua' }));
                 window.location.href = 'admin-rekap.html';
+                return;
             } 
-            // 2. Akun Login Murid
-            else if (pass === '12345') { // Password standar untuk murid
-                localStorage.setItem('kawanuaUserSession', JSON.stringify({ role: 'murid', user: user }));
+
+            // 2. CEK DATABASE MURID DENGAN NIM/NIK
+            const allStudents = JSON.parse(localStorage.getItem('kawanuaStudentsDB')) || {
+                // Database Contoh Murid Default (Jika Belum Ada Data Baru)
+                "KWN-2026001": {
+                    nim: "KWN-2026001",
+                    pass: "12345",
+                    nama: "Christian Ronaldo",
+                    paket: "Weekend Month Pass",
+                    coach: "Coach Ardiles",
+                    absensi: [
+                        { tanggal: "10 Sept 2026", lokasi: "Godbless Park", status: "Hadir" },
+                        { tanggal: "17 Sept 2026", lokasi: "Marina Plaza", status: "Hadir" },
+                        { tanggal: "24 Sept 2026", lokasi: "Karpet Biru", status: "Izin" }
+                    ],
+                    stats: { balance: 90, braking: 75, slalom: 60 },
+                    materiTerakhir: "Teknik Mengerem T-Stop & Pindah Tumpuan Kaki"
+                },
+                "KWN-2026002": {
+                    nim: "KWN-2026002",
+                    pass: "12345",
+                    nama: "Lionel Messi",
+                    paket: "Weekdays Private",
+                    coach: "Coach Topan",
+                    absensi: [
+                        { tanggal: "12 Sept 2026", lokasi: "Bukit Golf Boulevard", status: "Hadir" }
+                    ],
+                    stats: { balance: 60, braking: 40, slalom: 20 },
+                    materiTerakhir: "Postur Kaki V-Shape & Latihan Keseimbangan Mandiri"
+                }
+            };
+
+            // Simpan database awal ke browser jika belum ada
+            if (!localStorage.getItem('kawanuaStudentsDB')) {
+                localStorage.setItem('kawanuaStudentsDB', JSON.stringify(allStudents));
+            }
+
+            // Validasi Login Murid Berdasarkan NIM/NIK
+            const studentData = allStudents[user];
+            if (studentData && studentData.pass === pass) {
+                // Simpan Sesi Login Khusus Murid Ini
+                localStorage.setItem('kawanuaUserSession', JSON.stringify({ 
+                    role: 'murid', 
+                    nim: studentData.nim, 
+                    nama: studentData.nama 
+                }));
                 window.location.href = 'murid-dashboard.html';
-            } 
-            else {
+            } else {
                 errorMsg.style.display = 'block';
             }
         });
