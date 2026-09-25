@@ -23,11 +23,11 @@
 
         .profile-badge {
             background: rgba(28, 37, 65, 0.1);
-            padding: 10px 14px;
+            padding: 12px 14px;
             border-radius: 12px;
-            margin-bottom: 14px;
             font-size: 0.82rem;
             color: #1c2541;
+            line-height: 1.6;
         }
 
         .stat-bar-container {
@@ -45,6 +45,14 @@
             border-radius: 10px;
             transition: width 0.5s ease;
         }
+
+        .empty-state {
+            color: #64748b;
+            font-size: 0.8rem;
+            font-style: italic;
+            text-align: center;
+            padding: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -57,18 +65,18 @@
             <p class="brand-tagline">Selamat Datang, <span id="studentName">Murid</span>! 👋</p>
         </header>
 
-        <!-- KARTU ID MURID -->
+        <!-- INFORMASI AKUN MURID -->
         <div class="portal-card">
             <div class="profile-badge">
-                <p><strong>NIM / NIK:</strong> <span id="studentNIM">-</span></p>
-                <p><strong>Paket Latihan:</strong> <span id="studentPaket">-</span></p>
-                <p><strong>Coach Pendamping:</strong> <span id="studentCoach">-</span></p>
+                <p><strong>NIM / Username:</strong> <span id="studentNIM">-</span></p>
+                <p><strong>Paket Program:</strong> <span id="studentPaket">-</span></p>
+                <p><strong>Coach Utama:</strong> <span id="studentCoach">-</span></p>
             </div>
         </div>
 
-        <!-- STATISTIK PENINGKATAN MURID (DINAMIS PER INDIVIDU) -->
+        <!-- STATISTIK PENINGKATAN SKILL -->
         <div class="portal-card">
-            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 12px;">📊 Statistik Peningkatan Kemampuan</h3>
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 12px;">📊 Grafik Peningkatan Kemampuan</h3>
             
             <div style="margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
@@ -101,23 +109,23 @@
             </div>
         </div>
 
-        <!-- REKAP ABSENSI KHUSUS MURID INI -->
+        <!-- RIWAYAT ABSENSI -->
         <div class="portal-card">
-            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📅 Riwayat Kehadiran Sesi Latihan</h3>
-            <ul id="absensiList" style="font-size: 0.8rem; color: #1c2541; list-style: none; padding: 0;">
-                <!-- Absensi dimasukkan otomatis via JS -->
-            </ul>
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📅 Riwayat Kehadiran Latihan</h3>
+            <div id="absensiContainer">
+                <!-- Jika kosong akan diisi oleh JS -->
+            </div>
         </div>
 
-        <!-- MATERI TERAKHIR DARI COACH -->
+        <!-- EVALUASI & MATERI COACH -->
         <div class="portal-card">
-            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📚 Catatan Evaluasi & Materi Latihan</h3>
-            <p id="materiNote" style="font-size: 0.82rem; color: #334155; line-height: 1.4; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 10px;">
-                Belum ada evaluasi materi.
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📚 Evaluasi & Catatan Coach</h3>
+            <p id="materiNote" style="font-size: 0.82rem; color: #334155; line-height: 1.4; background: rgba(255,255,255,0.6); padding: 12px; border-radius: 10px;">
+                Belum ada catatan materi dari coach.
             </p>
         </div>
 
-        <!-- Tombol Logout -->
+        <!-- TOMBOL LOGOUT -->
         <button onclick="logout()" class="btn-primary" style="border: none; width: 100%; background: #ef4444 !important;">
             <span class="btn-icon">🚪</span>
             <div class="btn-text">
@@ -134,52 +142,57 @@
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('kawanuaUserSession'));
             
-            // Validasi Sesi Login Murid
+            // Proteksi Akses Sesi
             if (!session || session.role !== 'murid') {
-                alert('Akses Ditolak! Anda harus login terlebih dahulu.');
+                alert('Silakan login terlebih dahulu.');
                 window.location.href = 'login.html';
                 return;
             }
 
-            // Ambil Seluruh Database Murid
             const allStudents = JSON.parse(localStorage.getItem('kawanuaStudentsDB')) || {};
             const currentStudent = allStudents[session.nim];
 
             if (!currentStudent) {
-                alert('Data murid tidak ditemukan.');
+                alert('Data akun murid tidak ditemukan.');
                 logout();
                 return;
             }
 
-            // 1. TAMPILKAN HEADER & PROFILE
+            // 1. Muat Profil
             document.getElementById('studentName').innerText = currentStudent.nama;
             document.getElementById('studentNIM').innerText = currentStudent.nim;
             document.getElementById('studentPaket').innerText = currentStudent.paket;
-            document.getElementById('studentCoach').innerText = currentStudent.coach;
+            document.getElementById('studentCoach').innerText = currentStudent.coach || "Belum Ditentukan";
 
-            // 2. TAMPILKAN STATISTIK INDIVIDU
-            document.getElementById('txtBalance').innerText = currentStudent.stats.balance + '%';
-            document.getElementById('barBalance').style.width = currentStudent.stats.balance + '%';
+            // 2. Muat Statistik
+            const stats = currentStudent.stats || { balance: 0, braking: 0, slalom: 0 };
+            document.getElementById('txtBalance').innerText = stats.balance + '%';
+            document.getElementById('barBalance').style.width = stats.balance + '%';
 
-            document.getElementById('txtBraking').innerText = currentStudent.stats.braking + '%';
-            document.getElementById('barBraking').style.width = currentStudent.stats.braking + '%';
+            document.getElementById('txtBraking').innerText = stats.braking + '%';
+            document.getElementById('barBraking').style.width = stats.braking + '%';
 
-            document.getElementById('txtSlalom').innerText = currentStudent.stats.slalom + '%';
-            document.getElementById('barSlalom').style.width = currentStudent.stats.slalom + '%';
+            document.getElementById('txtSlalom').innerText = stats.slalom + '%';
+            document.getElementById('barSlalom').style.width = stats.slalom + '%';
 
-            // 3. TAMPILKAN ABSENSI INDIVIDU
-            const absensiContainer = document.getElementById('absensiList');
-            absensiContainer.innerHTML = '';
-            currentStudent.absensi.forEach(item => {
-                const icon = item.status === 'Hadir' ? '✅' : '⚠️';
-                const li = document.createElement('li');
-                li.style.marginBottom = '6px';
-                li.innerHTML = `${icon} <strong>${item.tanggal}</strong> - ${item.lokasi} (<em>${item.status}</em>)`;
-                absensiContainer.appendChild(li);
-            });
+            // 3. Muat Riwayat Absensi (Gunakan tampilan kosong jika belum ada data)
+            const absensiContainer = document.getElementById('absensiContainer');
+            if (!currentStudent.absensi || currentStudent.absensi.length === 0) {
+                absensiContainer.innerHTML = `<p class="empty-state">Belum ada riwayat kehadiran latihan.</p>`;
+            } else {
+                let htmlList = `<ul style="font-size: 0.8rem; color: #1c2541; list-style: none; padding: 0;">`;
+                currentStudent.absensi.forEach(item => {
+                    const icon = item.status === 'Hadir' ? '✅' : '⚠️';
+                    htmlList += `<li style="margin-bottom: 6px;">${icon} <strong>${item.tanggal}</strong> - ${item.lokasi} (<em>${item.status}</em>)</li>`;
+                });
+                htmlList += `</ul>`;
+                absensiContainer.innerHTML = htmlList;
+            }
 
-            // 4. TAMPILKAN EVALUASI MATERI
-            document.getElementById('materiNote').innerText = currentStudent.materiTerakhir;
+            // 4. Muat Evaluasi Materi
+            if (currentStudent.materiTerakhir) {
+                document.getElementById('materiNote').innerText = currentStudent.materiTerakhir;
+            }
         });
 
         function logout() {
