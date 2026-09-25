@@ -127,25 +127,57 @@
     }
 });
 
-            // Simpan database awal ke browser jika belum ada
-            if (!localStorage.getItem('kawanuaStudentsDB')) {
-                localStorage.setItem('kawanuaStudentsDB', JSON.stringify(allStudents));
-            }
+            // Simpan database a<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Mencegah reload halaman standar
+        
+        const usernameInput = document.getElementById('usernameInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMsg = document.getElementById('loginError');
 
-            // Validasi Login Murid Berdasarkan NIM/NIK
-            const studentData = allStudents[user];
-            if (studentData && studentData.pass === pass) {
-                // Simpan Sesi Login Khusus Murid Ini
-                localStorage.setItem('kawanuaUserSession', JSON.stringify({ 
-                    role: 'murid', 
-                    nim: studentData.nim, 
-                    nama: studentData.nama 
-                }));
-                window.location.href = 'murid-dashboard.html';
-            } else {
-                errorMsg.style.display = 'block';
-            }
-        });
-    </script>
+        // Sembunyikan pesan error awal
+        if (errorMsg) errorMsg.style.display = 'none';
+
+        const user = usernameInput ? usernameInput.value.trim() : '';
+        const pass = passwordInput ? passwordInput.value.trim() : '';
+
+        console.log("Mencoba login dengan:", user);
+
+        // 1. CEK LOGIN ADMIN
+        if (user.toLowerCase() === 'admin' && pass === 'admin123') {
+            console.log("Login Admin Berhasil!");
+            localStorage.setItem('kawanuaUserSession', JSON.stringify({ 
+                role: 'admin', 
+                user: 'Admin Kawanua' 
+            }));
+            window.location.href = 'admin-rekap.html';
+            return;
+        } 
+
+        // 2. CEK LOGIN MURID (Dari Database Registrasi)
+        const allStudents = JSON.parse(localStorage.getItem('kawanuaStudentsDB')) || {};
+        const studentData = allStudents[user];
+
+        if (studentData && studentData.pass === pass) {
+            console.log("Login Murid Berhasil:", studentData.nama);
+            localStorage.setItem('kawanuaUserSession', JSON.stringify({ 
+                role: 'murid', 
+                nim: studentData.nim, 
+                nama: studentData.nama 
+            }));
+            window.location.href = 'murid-dashboard.html';
+            return;
+        }
+
+        // 3. JIKA GAGAL LOGIN
+        console.warn("Login Gagal: Username atau Password tidak ditemukan.");
+        if (errorMsg) {
+            errorMsg.innerText = "NIM/Username atau Password salah!";
+            errorMsg.style.display = 'block';
+        } else {
+            alert("NIM/Username atau Password salah!");
+        }
+    });
+</script>
 </body>
 </html>
