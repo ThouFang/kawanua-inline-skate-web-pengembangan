@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Murid - KAWANUA Inline Skate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .portal-card {
+            background: rgba(255, 255, 255, 0.75) !important;
+            backdrop-filter: blur(14px) !important;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .stat-bar-container {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            height: 16px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .stat-bar-fill {
+            background: linear-gradient(90deg, #ff5722, #4caf50);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .materi-list li {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient-overlay"></div>
+
+    <div class="main-container">
+        <header class="header">
+            <h1 class="brand-title">PORTAL MURID</h1>
+            <p class="brand-tagline">Selamat Datang, <span id="studentName">Murid</span>! 👋</p>
+        </header>
+
+        <!-- CARD 1: STATISTIK PENINGKATAN -->
+        <div class="portal-card">
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 12px;">📊 Statistik Peningkatan Skil</h3>
+            
+            <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+                    <span>Keseimbangan (Balance):</span>
+                    <span>85%</span>
+                </div>
+                <div class="stat-bar-container">
+                    <div class="stat-bar-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+                    <span>Mengerem (Braking):</span>
+                    <span>70%</span>
+                </div>
+                <div class="stat-bar-container">
+                    <div class="stat-bar-fill" style="width: 70%;"></div>
+                </div>
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+                    <span>Trik Dasar (Basic Slalom):</span>
+                    <span>50%</span>
+                </div>
+                <div class="stat-bar-container">
+                    <div class="stat-bar-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2: REKAP ABSENSI -->
+        <div class="portal-card">
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📅 Kehadiran & Absensi Latihan</h3>
+            <p style="font-size: 0.8rem; color: #475569; margin-bottom: 10px;">Total Sesi Selesai: <strong>3 dari 4 Sesi</strong></p>
+            
+            <ul style="font-size: 0.8rem; color: #1c2541; list-style: none; padding: 0;">
+                <li style="margin-bottom: 6px;">✅ Sesi 1 - Godbless Park (Hadir)</li>
+                <li style="margin-bottom: 6px;">✅ Sesi 2 - Marina Plaza (Hadir)</li>
+                <li style="margin-bottom: 6px;">✅ Sesi 3 - Karpet Biru (Hadir)</li>
+                <li style="color: #64748b;">⏳ Sesi 4 - Next Schedule</li>
+            </ul>
+        </div>
+
+        <!-- CARD 3: MATERI PELAJARAN -->
+        <div class="portal-card">
+            <h3 style="font-size: 0.95rem; color: #1c2541; margin-bottom: 10px;">📚 Materi & Panduan Latihan</h3>
+            
+            <ul class="materi-list" style="font-size: 0.8rem; color: #1c2541; list-style: none; padding: 0;">
+                <li>
+                    <strong>1. Postur Dasar V-Shape</strong>
+                    <p style="font-size: 0.72rem; color: #475569;">Menjaga keseimbangan lutut ditekuk & posisi kaki membentuk huruf V.</p>
+                </li>
+                <li>
+                    <strong>2. Teknik Jatuh Aman (Safety Fall)</strong>
+                    <p style="font-size: 0.72rem; color: #475569;">Jatuh ke depan menggunakan knee pad dan wrist guard.</p>
+                </li>
+                <li>
+                    <strong>3. Heel Brake & T-Stop</strong>
+                    <p style="font-size: 0.72rem; color: #475569;">Mengerem secara bertahap saat meluncur cepat.</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tombol Logout -->
+        <button onclick="logout()" class="btn-primary" style="border: none; width: 100%; background: #ef4444 !important;">
+            <span class="btn-icon">🚪</span>
+            <div class="btn-text">
+                <strong>Keluar (Logout)</strong>
+            </div>
+        </button>
+
+        <footer class="footer" style="margin-top: 20px;">
+            <p>&copy; 2026 KAWANUA Inline Skate School</p>
+        </footer>
+    </div>
+
+    <script>
+        // Check Session Login Murid
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = JSON.parse(localStorage.getItem('kawanuaUserSession'));
+            
+            if (!session || session.role !== 'murid') {
+                alert('Akses Ditolak! Silakan login sebagai Murid.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('studentName').innerText = session.user.toUpperCase();
+        });
+
+        function logout() {
+            localStorage.removeItem('kawanuaUserSession');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
