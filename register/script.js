@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // NOMOR WHATSAPP ADMIN KAWANUA (Ubah sesuai nomor aktif)
-    const adminPhoneNumber = "6281919208099";
-
     const form = document.getElementById("surveyRegisterForm");
     const surveyButtons = document.querySelectorAll(".survey-btn");
     
@@ -68,11 +65,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const val = hiddenInput ? hiddenInput.value : "";
 
             if (!val) {
-                section.classList.add("invalid-section");
+                if (section) section.classList.add("invalid-section");
                 if (!firstInvalidElement) firstInvalidElement = section;
                 isValid = false;
             } else {
-                section.classList.remove("invalid-section");
+                if (section) section.classList.remove("invalid-section");
             }
         }
 
@@ -123,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // 3. Susun Format Pesan WhatsApp
+        // 3. Ambil Nilai dari Form
         const studentName = document.getElementById("studentName").value.trim();
         const studentAge = document.getElementById("studentAge").value.trim();
         const skillLevel = document.getElementById("skillLevel").value;
@@ -132,37 +129,42 @@ document.addEventListener("DOMContentLoaded", function () {
         const coachChoice = document.getElementById("coach").value;
         const scheduleText = document.getElementById("scheduleText").value.trim();
 
-        let guardianInfoText = "";
+        let phoneNum = "";
+        let guardianName = "";
+
         if (ageGroupVal === "Anak-anak") {
-            const guardianName = document.getElementById("guardianName").value.trim();
-            const guardianWa = document.getElementById("guardianWa").value.trim();
-            guardianInfoText = `• Nama Wali/Orang Tua: *${guardianName}*\n• WA Wali: *${guardianWa}*`;
+            guardianName = document.getElementById("guardianName").value.trim();
+            phoneNum = document.getElementById("guardianWa").value.trim();
         } else {
-            const adultWa = document.getElementById("adultWa").value.trim();
-            guardianInfoText = `• WA Peserta: *${adultWa}*`;
+            phoneNum = document.getElementById("adultWa").value.trim();
         }
 
-        const waMessage = 
-`*PENDATAAN MURID BARU LES PRIVATE*
-*KAWANUA INLINE SKATE SCHOOL*
---------------------------------------------
-*1. DATA MURID*
-• Nama Murid: *${studentName}*
-• Usia Exact: *${studentAge} Tahun*
-• Kategori: *${ageGroupVal}*
-${guardianInfoText}
+        // Hitung perkiraan nominal pembayaran berdasarkan pilihan paket
+        let estimatedPrice = "175.000";
+        if (packageChoice.toLowerCase().includes("month") || packageChoice.toLowerCase().includes("bulan")) {
+            estimatedPrice = packageChoice.toLowerCase().includes("weekend") ? "700.000" : "600.000";
+        } else if (packageChoice.toLowerCase().includes("weekend")) {
+            estimatedPrice = "200.000";
+        }
 
-*2. PENDATAAN LATIHAN*
-• Tingkat Kemampuan: *${skillLevel}*
-• Status Alat: *${equipment}*
-• Paket Latihan: *${packageChoice}*
-• Pilihan Coach: *${coachChoice}*
-• Rencana Jadwal: *${scheduleText}*
---------------------------------------------
-Mohon info ketersediaan slot dan instruksi pembayarannya. Terima kasih!`;
+        // 4. Simpan Data Pendaftaran Lengkap ke localStorage
+        const bookingData = {
+            nama: studentName,
+            usia: studentAge,
+            kategori: ageGroupVal,
+            namaWali: guardianName,
+            phone: phoneNum,
+            skill: skillLevel,
+            alat: equipment,
+            paket: packageChoice,
+            coach: coachChoice,
+            jadwal: scheduleText,
+            total: estimatedPrice
+        };
 
-        // Buka tautan WhatsApp Admin
-        const encodedUrl = `https://wa.me/${adminPhoneNumber}?text=${encodeURIComponent(waMessage)}`;
-        window.location.href = encodedUrl;
+        localStorage.setItem("kawanuaBookingData", JSON.stringify(bookingData));
+
+        // 5. Arahkan Pengguna ke Halaman Pembayaran
+        window.location.href = "../payment.html";
     });
 });
