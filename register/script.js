@@ -1,5 +1,45 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Fungsi Buat Password Acak 8 Karakter
+    // NOMOR WHATSAPP ADMIN KAWANUA (Sesuaikan nomor WhatsApp Admin Anda)
+    const adminWA = "6281234567890"; // Ganti dengan nomor WhatsApp Admin Aktif (format 62...)
+
+    // 1. LOGIKA TOMBOL SURVEY (Kategori, Skill, Alat, Paket, Coach)
+    const surveyButtons = document.querySelectorAll(".survey-btn");
+    
+    surveyButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const fieldName = this.getAttribute("data-field");
+            const fieldValue = this.getAttribute("data-value");
+
+            // Unselect tombol lain dalam grup yang sama
+            const parentSection = this.closest(".form-section");
+            parentSection.querySelectorAll(".survey-btn").forEach(btn => btn.classList.remove("active"));
+
+            // Set tombol yang diklik menjadi aktif
+            this.classList.add("active");
+
+            // Set nilai ke hidden input
+            const hiddenInput = document.getElementById(fieldName);
+            if (hiddenInput) {
+                hiddenInput.value = fieldValue;
+            }
+
+            // Tampilkan/Sembunyikan Form Wali berdasarkan Kategori Usia
+            if (fieldName === "ageGroup") {
+                const secGuardian = document.getElementById("sec-guardianData");
+                const secAdultPhone = document.getElementById("sec-adultPhone");
+
+                if (fieldValue === "Anak-anak") {
+                    secGuardian.classList.remove("hidden");
+                    secAdultPhone.classList.add("hidden");
+                } else {
+                    secGuardian.classList.add("hidden");
+                    secAdultPhone.classList.remove("hidden");
+                }
+            }
+        });
+    });
+
+    // 2. FUNGSI GENERATE PASSWORD ACAK
     function generateRandomPassword() {
         const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let password = '';
@@ -9,51 +49,67 @@ document.addEventListener("DOMContentLoaded", function () {
         return password;
     }
 
-    const regForm = document.getElementById("registrationForm") || document.querySelector("form");
-    
-    if (regForm) {
-        regForm.addEventListener("submit", function (e) {
+    // 3. LOGIKA SUBMIT FORM
+    const form = document.getElementById("surveyRegisterForm");
+
+    if (form) {
+        form.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            // 1. Ambil data dari form pendaftaran
-            const namaEl = document.getElementById("namaMurid") || document.querySelector("input[name='nama']");
-            const hpEl = document.getElementById("noWhatsApp") || document.querySelector("input[type='tel']");
-            const paketEl = document.getElementById("paketPilihan") || document.querySelector("select");
+            // Ambil semua data input
+            const ageGroup = document.getElementById("ageGroup").value;
+            const studentName = document.getElementById("studentName").value.trim();
+            const studentAge = document.getElementById("studentAge").value.trim();
+            const guardianName = document.getElementById("guardianName").value.trim();
+            const guardianWa = document.getElementById("guardianWa").value.trim();
+            const adultWa = document.getElementById("adultWa").value.trim();
+            const skillLevel = document.getElementById("skillLevel").value;
+            const equipment = document.getElementById("equipment").value;
+            const packageVal = document.getElementById("package").value;
+            const coachVal = document.getElementById("coach").value;
+            const scheduleText = document.getElementById("scheduleText").value.trim();
 
-            const nama = namaEl ? namaEl.value.trim() : "Murid Baru";
-            const hp = hpEl ? hpEl.value.trim() : "-";
-            const paket = paketEl ? paketEl.value : "Less Private";
+            // Validasi Sederhana
+            if (!ageGroup || !studentName || !studentAge || !skillLevel || !equipment || !packageVal || !coachVal || !scheduleText) {
+                alert("⚠️ Mohon lengkapi semua isian survei yang bertanda bintang (*)");
+                return;
+            }
 
-            // 2. Generate NIM & Password di belakang layar (Admin Only)
+            const activePhone = ageGroup === "Anak-anak" ? guardianWa : adultWa;
+            if (!activePhone) {
+                alert("⚠️ Mohon isi Nomor WhatsApp aktif Anda!");
+                return;
+            }
+
+            // Generate NIM & Password di belakang layar untuk Admin
             const timestamp = Date.now().toString().slice(-4);
             const generatedNIM = `KWN-2026${timestamp}`;
             const generatedPassword = generateRandomPassword();
 
-            // 3. Simpan data untuk Akses Portal Murid
+            // Structure Data Murid
             const newStudentData = {
                 nim: generatedNIM,
                 pass: generatedPassword,
-                nama: nama,
-                hp: hp,
-                paket: paket,
-                coach: "Belum Ditentukan",
+                nama: studentName,
+                hp: activePhone,
+                paket: packageVal,
+                coach: coachVal,
                 absensi: [],
                 stats: { balance: 0, braking: 0, slalom: 0 },
                 materiTerakhir: "Belum ada materi atau evaluasi dari coach."
             };
 
-            // 4. Simpan data untuk Rekap Admin
+            // Structure Data Rekap Admin
             const newRegistration = {
                 tanggal: new Date().toLocaleDateString("id-ID"),
-                nama: nama,
-                hp: hp,
-                paket: paket,
+                nama: studentName,
+                hp: activePhone,
+                paket: packageVal,
                 nim: generatedNIM,
-                pass: generatedPassword,
-                status: "Pending/Belum Bayar"
+                pass: generatedPassword
             };
 
-            // Simpan ke Local Storage
+            // Simpan ke LocalStorage
             let allStudents = JSON.parse(localStorage.getItem("kawanuaStudentsDB")) || {};
             allStudents[generatedNIM] = newStudentData;
             localStorage.setItem("kawanuaStudentsDB", JSON.stringify(allStudents));
@@ -62,11 +118,25 @@ document.addEventListener("DOMContentLoaded", function () {
             rekapAdmin.push(newRegistration);
             localStorage.setItem("kawanuaRegistrations", JSON.stringify(rekapAdmin));
 
-            // 5. Tampilkan Pesan Sukses Ringkas di Halaman (Tanpa Pop-Up & Tanpa WA Otomatis)
-            alert("✅ Pendaftaran Berhasil Dikirim!\n\nData pendaftaran Anda telah kami terima. Admin/Coach Kawanua akan menghubungi Anda via WhatsApp untuk verifikasi pembayaran dan pemberian Akun Login Portal Murid.");
+            // FORMAT PESAN KIRIM KE WHATSAPP ADMIN
+            let waText = `Halo Admin KAWANUA Inline Skate, saya ingin mendaftar Les Private!%0A%0A`;
+            waText += `📋 *DETAIL SURVEI PENDAFTARAN:*%0A`;
+            waText += `• *Kategori Usia:* ${ageGroup}%0A`;
+            waText += `• *Nama Murid:* ${studentName}%0A`;
+            waText += `• *Usia:* ${studentAge} Tahun%0A`;
+            if (ageGroup === "Anak-anak") {
+                waText += `• *Nama Wali:* ${guardianName}%0A`;
+            }
+            waText += `• *No. WA:* ${activePhone}%0A`;
+            waText += `• *Kemampuan:* ${skillLevel}%0A`;
+            waText += `• *Status Alat:* ${equipment}%0A`;
+            waText += `• *Paket Latihan:* ${packageVal}%0A`;
+            waText += `• *Pilihan Coach:* ${coachVal}%0A`;
+            waText += `• *Rencana Jadwal:* ${scheduleText}%0A%0A`;
+            waText += `Mohon info langkah konfirmasi pembayaran selanjutnya. Terima kasih!`;
 
-            // Reset formulir
-            this.reset();
+            // Buka WhatsApp Otomatis
+            window.open(`https://wa.me/${adminWA}?text=${waText}`, '_blank');
         });
     }
 });
