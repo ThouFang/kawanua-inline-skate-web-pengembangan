@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // NOMOR WHATSAPP ADMIN KAWANUA (Sesuaikan nomor WhatsApp Admin Anda)
-    const adminWA = "6281234567890"; // Ganti dengan nomor WhatsApp Admin Aktif (format 62...)
+    const adminWA = "6281919208099"; // Ganti dengan nomor WhatsApp Admin Aktif (format 62...)
 
     // 1. LOGIKA TOMBOL SURVEY (Kategori, Skill, Alat, Paket, Coach)
     const surveyButtons = document.querySelectorAll(".survey-btn");
