@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekap Pendaftar - KAWANUA Inline Skate</title>
+    <title>Rekap Pendaftaran - Admin KAWANUA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .admin-container {
+        .admin-card {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(14px) !important;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
             width: 100%;
-            max-width: 900px; /* Dibuat lebih lebar agar tabel muat */
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-            padding: 20px 10px;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         .table-responsive {
             width: 100%;
             overflow-x: auto;
-            margin-top: 16px;
+            margin-top: 15px;
         }
 
         table {
@@ -29,65 +32,43 @@
             border-collapse: collapse;
             font-size: 0.82rem;
             color: #1c2541;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             text-align: left;
+            white-space: nowrap;
         }
 
         th {
-            background: rgba(28, 37, 65, 0.85);
-            color: #ffffff;
-            padding: 12px 10px;
+            background: rgba(28, 37, 65, 0.1);
             font-weight: 700;
         }
 
-        td {
-            padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.35);
+        .empty-state {
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+            padding: 20px 0;
         }
 
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.6);
-        }
-
-        .badge-status {
-            display: inline-block;
-            padding: 4px 8px;
+        .badge-nim {
+            background: #e2e8f0;
+            padding: 2px 6px;
             border-radius: 6px;
-            font-size: 0.7rem;
+            font-family: monospace;
             font-weight: 700;
+            color: #2563eb;
         }
 
-        .status-transfer {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-coach {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .action-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            gap: 10px;
-        }
-
-        .clear-btn {
-            background: #ef4444;
-            color: #fff;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .clear-btn:hover {
-            background: #dc2626;
+        .badge-pass {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 700;
+            color: #d97706;
         }
     </style>
 </head>
@@ -95,113 +76,104 @@
 
     <div class="bg-gradient-overlay"></div>
 
-    <div class="admin-container">
-        <!-- Header Dashboard -->
+    <div class="main-container">
         <header class="header">
-            <h1 class="brand-title">DAFTAR PENDAFTAR MASUK</h1>
-            <p class="brand-tagline">KAWANUA Inline Skate School - Admin Dashboard</p>
+            <h1 class="brand-title">PANEL ADMIN</h1>
+            <p class="brand-tagline">Rekap Pendaftaran Murid Baru</p>
         </header>
 
-        <!-- Card Rekap Data (Glassmorphism Bening) -->
-        <div class="price-cards-container">
-            <div class="action-bar">
-                <span style="font-size: 0.88rem; font-weight: 700; color: #1c2541;">
-                    Total Pendaftar: <strong id="totalCount" style="color: #ff5722;">0</strong>
-                </span>
-                <button class="clear-btn" onclick="clearData()">🗑️ Hapus Semua Data</button>
+        <div class="admin-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="font-size: 1rem; color: #1c2541; margin: 0;">📋 Daftar Murid Terdaftar</h3>
+                <button onclick="clearData()" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; cursor: pointer;">Hapus Semua Data</button>
             </div>
 
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
-                            <th>Waktu</th>
+                            <th>No</th>
+                            <th>Tanggal</th>
                             <th>Nama Murid</th>
-                            <th>Kategori / Usia</th>
-                            <th>No. WA</th>
-                            <th>Paket & Coach</th>
-                            <th>Metode Bayar</th>
-                            <th>Total</th>
+                            <th>No. WhatsApp</th>
+                            <th>Paket</th>
+                            <th>NIM/Username</th>
+                            <th>Password</th>
                         </tr>
                     </thead>
-                    <tbody id="registrationTableBody">
-                        <!-- Data otomatis dimasukkan melalui JavaScript -->
+                    <tbody id="rekapTableBody">
+                        <!-- Data otomatis diisi oleh JS -->
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <button onclick="logoutAdmin()" class="btn-primary" style="border: none; width: 100%; background: #475569 !important;">
+            <span class="btn-icon">🚪</span>
+            <div class="btn-text">
+                <strong>Keluar (Logout Admin)</strong>
+            </div>
+        </button>
+
         <footer class="footer" style="margin-top: 20px;">
-            <p>&copy; 2026 KAWANUA Inline Skate School Admin</p>
+            <p>&copy; 2026 KAWANUA Inline Skate School</p>
         </footer>
     </div>
 
     <script>
-        // Proteksi Akses Halaman Admin
-document.addEventListener('DOMContentLoaded', () => {
-    const session = JSON.parse(localStorage.getItem('kawanuaUserSession'));
-    
-    // Jika belum login atau bukan admin, tendang kembali ke halaman login
-    if (!session || session.role !== 'admin') {
-        alert('Akses Ditolak! Anda harus login sebagai Admin.');
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    // Panggil fungsi muat data rekap pendaftar
-    loadRegistrations();
-});
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Proteksi Akses Admin
+            const session = JSON.parse(localStorage.getItem('kawanuaUserSession'));
+            if (!session || session.role !== 'admin') {
+                alert('Akses Ditolak! Anda harus login sebagai Admin.');
+                window.location.href = 'login.html';
+                return;
+            }
 
-// Fungsi Logout
-function logout() {
-    localStorage.removeItem('kawanuaUserSession');
-    window.location.href = 'login.html';
-}
-        document.addEventListener('DOMContentLoaded', loadRegistrations);
+            // 2. Muat Data Pendaftaran
+            loadRegistrations();
+        });
 
         function loadRegistrations() {
-            const tableBody = document.getElementById('registrationTableBody');
-            const totalCount = document.getElementById('totalCount');
-
-            // Ambil daftar histori pendaftaran dari localStorage
-            const registrations = JSON.parse(localStorage.getItem('kawanuaAllRegistrations')) || [];
-
-            totalCount.innerText = registrations.length;
-            tableBody.innerHTML = '';
+            const tableBody = document.getElementById('rekapTableBody');
+            const registrations = JSON.parse(localStorage.getItem('kawanuaRegistrations')) || [];
 
             if (registrations.length === 0) {
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="7" style="text-align: center; padding: 20px; color: #64748b;">
-                            Belum ada pendaftar baru yang masuk.
-                        </td>
-                    </tr>`;
+                        <td colspan="7" class="empty-state">Belum ada murid yang mendaftar.</td>
+                    </tr>
+                `;
                 return;
             }
 
-            registrations.forEach(item => {
-                const badgeClass = item.metodePembayaran.includes('Transfer') ? 'status-transfer' : 'status-coach';
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td style="white-space: nowrap;">${item.tanggal}</td>
+            tableBody.innerHTML = '';
+            registrations.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${item.tanggal || '-'}</td>
                     <td><strong>${item.nama}</strong></td>
-                    <td>${item.kategori} (${item.usia} Thn)<br><small>Wali: ${item.namaWali}</small></td>
-                    <td><a href="https://wa.me/${item.phone}" target="_blank" style="color: #0284c7; font-weight: 600; text-decoration: none;">${item.phone} 💬</a></td>
-                    <td>${item.paket}<br><small>Coach: ${item.coach}</small></td>
-                    <td><span class="badge-status ${badgeClass}">${item.metodePembayaran}</span></td>
-                    <td><strong>Rp ${item.total}</strong></td>
+                    <td><a href="https://wa.me/${item.hp}" target="_blank" style="color: #16a34a; font-weight:600; text-decoration:none;">${item.hp} 💬</a></td>
+                    <td>${item.paket}</td>
+                    <td><span class="badge-nim">${item.nim}</span></td>
+                    <td><span class="badge-pass">${item.pass}</span></td>
                 `;
-                tableBody.appendChild(row);
+                tableBody.appendChild(tr);
             });
         }
 
-        // Fungsi Reset/Hapus Data Rekap
         function clearData() {
-            if (confirm("Apakah Anda yakin ingin menghapus seluruh rekap histori pendaftar?")) {
-                localStorage.removeItem('kawanuaAllRegistrations');
+            if (confirm('Apakah Anda yakin ingin menghapus seluruh rekap pendaftaran murid?')) {
+                localStorage.removeItem('kawanuaRegistrations');
+                localStorage.removeItem('kawanuaStudentsDB');
                 loadRegistrations();
             }
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('kawanuaUserSession');
+            window.location.href = 'login.html';
         }
     </script>
 </body>
