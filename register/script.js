@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // FUNGSI BUAT PASSWORD ACAK 8 KARAKTER
+    // Fungsi Buat Password Acak 8 Karakter
     function generateRandomPassword() {
         const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let password = '';
@@ -9,15 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
         return password;
     }
 
-    // PROSES SUBMIT FORM PENDAFTARAN LESS PRIVATE
     const regForm = document.getElementById("registrationForm") || document.querySelector("form");
     
     if (regForm) {
         regForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            // Merekam data dari Form Pendaftaran Less Private
-            const namaEl = document.getElementById("namaMurid") || document.querySelector("input[type='text']");
+            // 1. Ambil data dari form pendaftaran
+            const namaEl = document.getElementById("namaMurid") || document.querySelector("input[name='nama']");
             const hpEl = document.getElementById("noWhatsApp") || document.querySelector("input[type='tel']");
             const paketEl = document.getElementById("paketPilihan") || document.querySelector("select");
 
@@ -25,12 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const hp = hpEl ? hpEl.value.trim() : "-";
             const paket = paketEl ? paketEl.value : "Less Private";
 
-            // Buat NIM unik dan Password acak otomatis
+            // 2. Generate NIM & Password di belakang layar (Admin Only)
             const timestamp = Date.now().toString().slice(-4);
             const generatedNIM = `KWN-2026${timestamp}`;
             const generatedPassword = generateRandomPassword();
 
-            // 1. Data Akun untuk Portal Murid (murid-dashboard.html)
+            // 3. Simpan data untuk Akses Portal Murid
             const newStudentData = {
                 nim: generatedNIM,
                 pass: generatedPassword,
@@ -43,17 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 materiTerakhir: "Belum ada materi atau evaluasi dari coach."
             };
 
-            // 2. Data Rekap untuk Admin (admin-rekap.html)
+            // 4. Simpan data untuk Rekap Admin
             const newRegistration = {
                 tanggal: new Date().toLocaleDateString("id-ID"),
                 nama: nama,
                 hp: hp,
                 paket: paket,
                 nim: generatedNIM,
-                pass: generatedPassword
+                pass: generatedPassword,
+                status: "Pending/Belum Bayar"
             };
 
-            // SIMPAN KE STORAGE LOKAL (Shared across domain/project)
+            // Simpan ke Local Storage
             let allStudents = JSON.parse(localStorage.getItem("kawanuaStudentsDB")) || {};
             allStudents[generatedNIM] = newStudentData;
             localStorage.setItem("kawanuaStudentsDB", JSON.stringify(allStudents));
@@ -62,12 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
             rekapAdmin.push(newRegistration);
             localStorage.setItem("kawanuaRegistrations", JSON.stringify(rekapAdmin));
 
-            // POP-UP INFORMASI AKUN LOGIN UNTUK MURID
-            alert(`🎉 Pendaftaran Less Private Berhasil!\n\nBerikut Akun Akses Portal Murid Anda:\n-----------------------------------\nNIM / Username: ${generatedNIM}\nPassword: ${generatedPassword}\n-----------------------------------\nSilakan simpan NIM & Password ini untuk masuk ke portal murid!`);
+            // 5. Tampilkan Pesan Sukses Ringkas di Halaman (Tanpa Pop-Up & Tanpa WA Otomatis)
+            alert("✅ Pendaftaran Berhasil Dikirim!\n\nData pendaftaran Anda telah kami terima. Admin/Coach Kawanua akan menghubungi Anda via WhatsApp untuk verifikasi pembayaran dan pemberian Akun Login Portal Murid.");
 
-            // Direct ke Halaman Login atau Reset Form
+            // Reset formulir
             this.reset();
-            window.location.href = "../login.html"; // Mengarahkan murid langsung ke halaman login di root
         });
     }
 });
