@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .admin-card {
-            background: rgba(255, 255, 255, 0.85) !important;
+            background: rgba(255, 255, 255, 0.9) !important;
             backdrop-filter: blur(14px) !important;
             padding: 20px;
             border-radius: 20px;
@@ -55,7 +55,7 @@
 
         .badge-nim {
             background: #e2e8f0;
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 6px;
             font-family: monospace;
             font-weight: 700;
@@ -64,11 +64,29 @@
 
         .badge-pass {
             background: #fef3c7;
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 6px;
             font-family: monospace;
             font-weight: 700;
             color: #d97706;
+        }
+
+        .btn-wa {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-wa:hover {
+            background: #16a34a;
         }
     </style>
 </head>
@@ -79,12 +97,12 @@
     <div class="main-container">
         <header class="header">
             <h1 class="brand-title">PANEL ADMIN</h1>
-            <p class="brand-tagline">Rekap Pendaftaran Murid Baru</p>
+            <p class="brand-tagline">Rekap Pendaftaran & Akses Akun Murid</p>
         </header>
 
         <div class="admin-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h3 style="font-size: 1rem; color: #1c2541; margin: 0;">📋 Daftar Murid Terdaftar</h3>
+                <h3 style="font-size: 1rem; color: #1c2541; margin: 0;">📋 Daftar Akun Pendaftar</h3>
                 <button onclick="clearData()" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; cursor: pointer;">Hapus Semua Data</button>
             </div>
 
@@ -95,14 +113,15 @@
                             <th>No</th>
                             <th>Tanggal</th>
                             <th>Nama Murid</th>
-                            <th>No. WhatsApp</th>
+                            <th>WhatsApp</th>
                             <th>Paket</th>
-                            <th>NIM/Username</th>
+                            <th>NIM / Username</th>
                             <th>Password</th>
+                            <th>Aksi Kirim Akun</th>
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody">
-                        <!-- Data otomatis diisi oleh JS -->
+                        <!-- Data diisi otomatis oleh JS -->
                     </tbody>
                 </table>
             </div>
@@ -122,15 +141,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Proteksi Akses Admin
+            // Proteksi Halaman Admin
             const session = JSON.parse(localStorage.getItem('kawanuaUserSession'));
             if (!session || session.role !== 'admin') {
-                alert('Akses Ditolak! Anda harus login sebagai Admin.');
+                alert('Akses Ditolak! Halaman ini khusus Admin.');
                 window.location.href = 'login.html';
                 return;
             }
 
-            // 2. Muat Data Pendaftaran
             loadRegistrations();
         });
 
@@ -141,7 +159,7 @@
             if (registrations.length === 0) {
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="empty-state">Belum ada murid yang mendaftar.</td>
+                        <td colspan="8" class="empty-state">Belum ada pendaftaran murid baru.</td>
                     </tr>
                 `;
                 return;
@@ -149,22 +167,36 @@
 
             tableBody.innerHTML = '';
             registrations.forEach((item, index) => {
+                // Bersihkan format nomor WA agar bisa dibuka di wa.me
+                let cleanHP = item.hp.replace(/[^0-9]/g, '');
+                if (cleanHP.startsWith('0')) {
+                    cleanHP = '62' + cleanHP.slice(1);
+                }
+
+                // Draf Pesan WA yang dikirim Admin ke Murid
+                const pesanWA = `Halo Kak ${item.nama}, pendaftaran Anda di KAWANUA Inline Skate untuk paket *${item.paket}* telah terverifikasi!%0A%0ABerikut adalah *Akses Portal Murid Anda:*%0A-----------------------------------%0A• *NIM / Username:* ${item.nim}%0A• *Password:* ${item.pass}%0A-----------------------------------%0ASilakan masuk ke portal murid melalui halaman Login di website kami untuk melihat jadwal, absensi, dan materi latihan.%0A%0ASelamat berlatih! 🛹`;
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${index + 1}</td>
                     <td>${item.tanggal || '-'}</td>
                     <td><strong>${item.nama}</strong></td>
-                    <td><a href="https://wa.me/${item.hp}" target="_blank" style="color: #16a34a; font-weight:600; text-decoration:none;">${item.hp} 💬</a></td>
+                    <td>${item.hp}</td>
                     <td>${item.paket}</td>
                     <td><span class="badge-nim">${item.nim}</span></td>
                     <td><span class="badge-pass">${item.pass}</span></td>
+                    <td>
+                        <a href="https://wa.me/${cleanHP}?text=${pesanWA}" target="_blank" class="btn-wa">
+                            💬 Kirim Akun via WA
+                        </a>
+                    </td>
                 `;
                 tableBody.appendChild(tr);
             });
         }
 
         function clearData() {
-            if (confirm('Apakah Anda yakin ingin menghapus seluruh rekap pendaftaran murid?')) {
+            if (confirm('Apakah Anda yakin ingin menghapus semua rekap pendaftaran?')) {
                 localStorage.removeItem('kawanuaRegistrations');
                 localStorage.removeItem('kawanuaStudentsDB');
                 loadRegistrations();
