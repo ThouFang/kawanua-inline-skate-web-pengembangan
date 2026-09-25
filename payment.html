@@ -8,53 +8,183 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS Khusus Opsi Pembayaran Interaktif */
+        .payment-method-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pay-option-btn {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 14px;
+            padding: 12px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: #1c2541;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pay-option-btn:hover {
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        .pay-option-btn.active {
+            background: rgba(255, 87, 34, 0.15) !important;
+            border-color: #ff5722 !important;
+            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.25);
+        }
+
+        .pay-option-btn .pay-icon {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .pay-option-btn strong {
+            font-size: 0.82rem;
+            display: block;
+            line-height: 1.2;
+            color: #1c2541;
+        }
+
+        .bank-box {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .copy-btn {
+            background: #1c2541;
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #ff5722;
+        }
+
+        .instruction-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-left: 4px solid #ff5722;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.78rem;
+            color: #1c2541;
+            text-align: left;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+    </style>
 </head>
 <body>
 
     <div class="bg-gradient-overlay"></div>
 
     <div class="main-container">
-        <!-- Header Ringkasan Pembayaran -->
+        <!-- Header Pembayaran -->
         <header class="header">
-            <h1 class="brand-title">PEMBAYARAN LATIHAN</h1>
+            <h1 class="brand-title">METODE PEMBAYARAN</h1>
             <p class="brand-tagline">KAWANUA Inline Skate School</p>
         </header>
 
-        <!-- Card Transaksi (Glassmorphism 3D Bening) -->
+        <!-- Card Transaksi (Glassmorphism Bening) -->
         <div class="price-cards-container" style="text-align: left;">
-            <h2 class="price-list-title" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.6); padding-bottom: 10px; margin-bottom: 16px;">
+            
+            <!-- Ringkasan Pendaftaran -->
+            <h2 class="price-list-title" style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.6); padding-bottom: 10px; margin-bottom: 14px;">
                 📋 Ringkasan Pendaftaran
             </h2>
 
-            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #1c2541; margin-bottom: 20px;">
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: #1c2541; margin-bottom: 16px;">
                 <p><strong>Nama Murid:</strong> <span id="summaryName">-</span></p>
                 <p><strong>No. WhatsApp:</strong> <span id="summaryPhone">-</span></p>
                 <p><strong>Paket Latihan:</strong> <span id="summaryPackage">-</span></p>
-                <p><strong>Lokasi Latihan:</strong> <span id="summaryLocation">-</span></p>
+                <p><strong>Jadwal / Lokasi:</strong> <span id="summaryLocation">-</span></p>
                 <div class="separator"></div>
-                <p style="font-size: 1.05rem; font-weight: 800; color: #d84315; display: flex; justify-content: space-between;">
-                    <span>Total Pembayaran:</span>
+                <p style="font-size: 1rem; font-weight: 800; color: #d84315; display: flex; justify-content: space-between;">
+                    <span>Total Biaya:</span>
                     <span id="summaryTotal">Rp 0</span>
                 </p>
             </div>
 
-            <h3 style="font-size: 0.95rem; text-align: center; margin-bottom: 12px; color: #1c2541;">Scan QRIS / Transfer Pembayaran:</h3>
-            
-            <!-- Tempat Kode QRIS / Rekening Bank -->
-            <div style="background: rgba(255,255,255,0.9); padding: 16px; border-radius: 16px; text-align: center; margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.1);">
-                <!-- Ganti assets/qris.png dengan gambar QRIS Anda -->
-                <img src="assets/qris.png" alt="QRIS Kawanua Inline Skate" style="max-width: 220px; width: 100%; height: auto; border-radius: 12px; margin-bottom: 8px;">
-                <p style="font-size: 0.78rem; color: #64748b; font-weight: 600;">Atas Nama: KAWANUA INLINE SKATE</p>
+            <!-- Pilihan Metode Pembayaran -->
+            <h3 style="font-size: 0.88rem; font-weight: 700; color: #1c2541; margin-bottom: 10px; text-align: center;">
+                Pilih Cara Pembayaran:
+            </h3>
+
+            <div class="payment-method-grid">
+                <!-- Opsi 1: Bayar Transfer Sekarang -->
+                <div class="pay-option-btn active" id="optTransfer" onclick="selectPaymentMethod('transfer')">
+                    <span class="pay-icon">💳</span>
+                    <strong>Transfer Sekarang</strong>
+                    <small style="font-size: 0.68rem; color: #475569;">Bank Transfer (Lunas)</small>
+                </div>
+
+                <!-- Opsi 2: Bayar Lewat Coach -->
+                <div class="pay-option-btn" id="optCoach" onclick="selectPaymentMethod('coach')">
+                    <span class="pay-icon">🛼</span>
+                    <strong>Lewat Coach</strong>
+                    <small style="font-size: 0.68rem; color: #475569;">Bayar Setelah Latihan</small>
+                </div>
             </div>
 
-            <!-- Tombol Otomatis ke WA -->
+            <!-- KONTEN MUNCUL UNTUK OPSI: TRANSFER SEKARANG -->
+            <div id="contentTransfer">
+                <div class="bank-box">
+                    <p style="font-size: 0.78rem; font-weight: 600; color: #475569; margin-bottom: 4px;">Transfer ke Rekening Resmi:</p>
+                    <p style="font-size: 1rem; font-weight: 800; color: #1c2541; margin: 2px 0;">BCA: 1234567890</p>
+                    <p style="font-size: 0.8rem; font-weight: 600; color: #1c2541;">a.n. KAWANUA INLINE SKATE</p>
+                    <button class="copy-btn" onclick="copyRekening('1234567890')">📋 Salin No. Rekening</button>
+                </div>
+
+                <div class="instruction-box">
+                    <strong>📌 Petunjuk Pembayaran Transfer:</strong>
+                    <ol style="margin-left: 16px; margin-top: 4px;">
+                        <li>Lakukan transfer sesuai nominal <strong><span id="instructionTotal">Rp 0</span></strong> ke rekening BCA di atas.</li>
+                        <li><strong>Simpan/Screenshot bukti transfer</strong> pembayaran Anda.</li>
+                        <li>Klik tombol konfirmasi di bawah untuk mengirim formulir + lampiran bukti transfer ke WA Admin.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- KONTEN MUNCUL UNTUK OPSI: BAYAR LEWAT COACH -->
+            <div id="contentCoach" class="hidden">
+                <div class="instruction-box" style="border-left-color: #0284c7;">
+                    <strong style="color: #0369a1;">📌 Petunjuk Bayar di Lapangan (Ke Coach):</strong>
+                    <ul style="margin-left: 16px; margin-top: 4px; list-style-type: disc;">
+                        <li>Pembayaran dilakukan <strong>setelah sesi latihan selesai</strong> di lokasi.</li>
+                        <li>Pembayaran wajib via <strong>Transfer Bank / QRIS</strong> langsung ke Coach di lapangan (Sesuai instruksi Coach).</li>
+                        <li><strong>Wajib meminta & menyimpan bukti transfer</strong> setelah pembayaran di lokasi selesai diserahkan.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tombol Konfirmasi Akhir ke WA -->
             <button id="btnCompletePayment" class="btn-primary" style="border: none; width: 100%;">
-                <span class="btn-icon">✅</span>
+                <span class="btn-icon">💬</span>
                 <div class="btn-text">
-                    <strong>Konfirmasi & Chat Admin WA</strong>
-                    <small>Otomatis kirim detail pendaftaran</small>
+                    <strong id="btnTextMain">Konfirmasi & Kirim Bukti Transfer</strong>
+                    <small id="btnTextSub">Otomatis membuka WhatsApp Admin</small>
                 </div>
             </button>
+
         </div>
 
         <footer class="footer">
@@ -63,35 +193,89 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Ambil data pendaftaran dari localStorage
-        const bookingData = JSON.parse(localStorage.getItem('kawanuaBookingData')) || {
-            nama: 'Calon Murid',
-            phone: '-',
-            paket: 'Private Class',
-            jadwal: 'Godbless Park',
-            total: '175.000',
-            kategori: 'Anak-anak',
-            coach: 'Coach'
-        };
+        // Variabel Status Metode Pembayaran
+        let selectedMethod = 'transfer'; // Default: transfer
+        let bookingData = {};
 
-        // Isi tampilan ringkasan transaksi
-        document.getElementById('summaryName').innerText = bookingData.nama;
-        document.getElementById('summaryPhone').innerText = bookingData.phone;
-        document.getElementById('summaryPackage').innerText = bookingData.paket;
-        document.getElementById('summaryLocation').innerText = bookingData.jadwal;
-        document.getElementById('summaryTotal').innerText = 'Rp ' + bookingData.total;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Read data from localStorage (Saved from script.js)
+            bookingData = JSON.parse(localStorage.getItem('kawanuaBookingData')) || {
+                nama: 'Calon Murid',
+                phone: '-',
+                paket: 'Private Class',
+                jadwal: 'Godbless Park',
+                total: '175.000',
+                kategori: 'Anak-anak',
+                coach: 'Coach'
+            };
 
-        // Ganti dengan Nomor Admin WA Kawanua
-        const adminPhoneNumber = "6281919208099"; 
+            // Display Summary Data
+            document.getElementById('summaryName').innerText = bookingData.nama;
+            document.getElementById('summaryPhone').innerText = bookingData.phone;
+            document.getElementById('summaryPackage').innerText = bookingData.paket;
+            document.getElementById('summaryLocation').innerText = bookingData.jadwal;
+            document.getElementById('summaryTotal').innerText = 'Rp ' + bookingData.total;
+            document.getElementById('instructionTotal').innerText = 'Rp ' + bookingData.total;
 
-        document.getElementById('btnCompletePayment').addEventListener('click', () => {
+            // Submit Button Event
+            document.getElementById('btnCompletePayment').addEventListener('click', sendToWhatsApp);
+        });
+
+        // Switch Method Function
+        function selectPaymentMethod(method) {
+            selectedMethod = method;
+            const optTransfer = document.getElementById('optTransfer');
+            const optCoach = document.getElementById('optCoach');
+            const contentTransfer = document.getElementById('contentTransfer');
+            const contentCoach = document.getElementById('contentCoach');
+            const btnTextMain = document.getElementById('btnTextMain');
+
+            if (method === 'transfer') {
+                optTransfer.classList.add('active');
+                optCoach.classList.remove('active');
+                contentTransfer.classList.remove('hidden');
+                contentCoach.classList.add('hidden');
+                btnTextMain.innerText = 'Konfirmasi & Kirim Bukti Transfer';
+            } else {
+                optCoach.classList.add('active');
+                optTransfer.classList.remove('active');
+                contentCoach.classList.remove('hidden');
+                contentTransfer.classList.add('hidden');
+                btnTextMain.innerText = 'Konfirmasi Pendaftaran ke Admin';
+            }
+        }
+
+        // Copy Account Number
+        function copyRekening(number) {
+            navigator.clipboard.writeText(number);
+            alert('Nomor Rekening BCA (' + number + ') berhasil disalin!');
+        }
+
+        // Redirect to WhatsApp Admin
+        function sendToWhatsApp() {
+            const adminPhoneNumber = "6281919208099"; // Ganti dengan No WA Admin Kawanua
+
             let guardianText = bookingData.kategori === "Anak-anak" 
                 ? `• Nama Wali/Orang Tua: *${bookingData.namaWali}*\n• WA Wali: *${bookingData.phone}*`
                 : `• WA Peserta: *${bookingData.phone}*`;
 
+            let paymentStatusText = "";
+            if (selectedMethod === 'transfer') {
+                paymentStatusText = 
+`💳 *METODE PEMBAYARAN:*
+• Opsi: *Transfer Sekarang (Bank BCA)*
+• Biaya: *Rp ${bookingData.total}*
+• Status: *LUNAS (Bukti Transfer Dilampirkan)*`;
+            } else {
+                paymentStatusText = 
+`🛼 *METODE PEMBAYARAN:*
+• Opsi: *Bayar Lewat Coach di Lapangan*
+• Biaya: *Rp ${bookingData.total}*
+• Catatan: *Akan transfer ke Coach setelah latihan selesai & melampirkan bukti transfer.*`;
+            }
+
             const waMessage = 
-`*PENDATAAN & PEMBAYARAN LES PRIVATE*
+`*PENDATAAN PENDAFTARAN LES PRIVATE*
 *KAWANUA INLINE SKATE SCHOOL*
 --------------------------------------------
 *1. DATA MURID*
@@ -100,7 +284,7 @@
 • Kategori: *${bookingData.kategori}*
 ${guardianText}
 
-*2. PENDATAAN LATIHAN*
+*2. DETAIL LATIHAN*
 • Tingkat Kemampuan: *${bookingData.skill}*
 • Status Alat: *${bookingData.alat}*
 • Paket Latihan: *${bookingData.paket}*
@@ -108,16 +292,12 @@ ${guardianText}
 • Rencana Jadwal/Lokasi: *${bookingData.jadwal}*
 
 --------------------------------------------
-💳 *STATUS PEMBAYARAN:*
-• Total: *Rp ${bookingData.total}*
-• Status: *Sudah Transfer / Lunas*
+${paymentStatusText}
 --------------------------------------------
-Berikut saya sertakan lampiran bukti transfer pembayaran. Terima kasih Admin!`;
+Mohon dikonfirmasi pendaftarannya, Terima kasih Admin!`;
 
-            // Buka WhatsApp Admin
             window.location.href = `https://wa.me/${adminPhoneNumber}?text=${encodeURIComponent(waMessage)}`;
-        });
-    });
-</script>
+        }
+    </script>
 </body>
 </html>
